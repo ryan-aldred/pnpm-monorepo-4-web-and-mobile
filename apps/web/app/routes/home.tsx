@@ -1,5 +1,5 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
-import { getUsers } from '@monorepo/core/data';
+import { getUsers } from '@monorepo/core';
 
 export const meta: MetaFunction = () => {
   return [

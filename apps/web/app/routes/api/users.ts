@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, ActionFunctionArgs } from 'react-router';
-import { getUsers, createUser } from '@monorepo/core/data';
+import { getUsers, createUser } from '@monorepo/core';
 
 // Example API route that will be called by the Expo app
 export async function loader({ request }: LoaderFunctionArgs) {

@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { ENDPOINTS, useData } from '@monorepo/core';
 import { User } from '@monorepo/types';
+import { Stack } from 'expo-router';
 
 export default function HomeScreen() {
   const { data, loading, error } = useData<User[]>(ENDPOINTS.USERS);
@@ -26,6 +27,10 @@ export default function HomeScreen() {
     <ScrollView className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100">
       <StatusBar style="auto" />
       <View className="p-6">
+        {/* <Stack>
+          <Stack.Screen name="index" options={{ title: 'Home' }} />
+          <Stack.Screen name="user/[id]" options={{ title: 'User Profile' }} />
+        </Stack> */}
         <View className="bg-white rounded-2xl shadow-lg p-6 mb-4">
           <Text className="text-3xl font-bold text-gray-900 mb-4">
             Welcome to Expo!

@@ -8,6 +8,8 @@
     "./components/*": "./src/components/*/index.ts"
   },
   "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
     "lint": "eslint src",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf node_modules"
@@ -19,12 +21,16 @@
   "devDependencies": {
     "@monorepo/config-eslint": "workspace:*",
     "@monorepo/config-typescript": "workspace:*",
+    "@testing-library/react": "^14.1.2",
     "@types/react": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "jsdom": "^23.0.1",
     "nativewind": "^4.1.0",
     "react": "^18.3.1",
     "react-native": "0.76.0",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^1.1.0"
   },
   "peerDependencies": {
     "react": "^18.3.1"
