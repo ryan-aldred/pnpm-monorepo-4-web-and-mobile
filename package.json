@@ -1,0 +1,30 @@
+{
+  "name": "expo-rr7-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm run --parallel --filter './apps/*' dev",
+    "dev:expo": "pnpm --filter @monorepo/expo dev",
+    "dev:web": "pnpm --filter @monorepo/web dev",
+    "build": "pnpm run --filter './packages/*' build && pnpm run --filter './apps/*' build",
+    "build:expo": "pnpm --filter @monorepo/expo build",
+    "build:web": "pnpm --filter @monorepo/web build",
+    "lint": "pnpm run --recursive lint",
+    "type-check": "pnpm run --recursive type-check",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "pnpm run --recursive clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@monorepo/config-eslint": "workspace:*",
+    "@monorepo/config-prettier": "workspace:*",
+    "@monorepo/config-typescript": "workspace:*",
+    "prettier": "^3.1.1",
+    "turbo": "^2.3.0",
+    "typescript": "^5.6.0"
+  },
+  "packageManager": "pnpm@10.18.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

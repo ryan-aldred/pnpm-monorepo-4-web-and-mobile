@@ -1,0 +1,15 @@
+{
+  "extends": "@monorepo/config-typescript/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"],
+      "@monorepo/ui": ["../../packages/ui/src"],
+      "@monorepo/core": ["../../packages/core/src"],
+      "@monorepo/types": ["../../packages/types/src"]
+    },
+    "types": ["@react-router/node", "vite/client"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "build"]
+}

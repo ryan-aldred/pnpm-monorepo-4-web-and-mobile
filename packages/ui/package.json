@@ -1,0 +1,32 @@
+{
+  "name": "@monorepo/ui",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "@monorepo/types": "workspace:*",
+    "clsx": "^2.1.0"
+  },
+  "devDependencies": {
+    "@monorepo/config-eslint": "workspace:*",
+    "@monorepo/config-typescript": "workspace:*",
+    "@types/react": "^18.3.0",
+    "nativewind": "^4.1.0",
+    "react": "^18.3.1",
+    "react-native": "0.76.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.6.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  }
+}

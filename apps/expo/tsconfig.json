@@ -1,0 +1,33 @@
+{
+  "extends": "@monorepo/config-typescript/native.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./app/*"
+      ],
+      "@monorepo/ui": [
+        "../../packages/ui/src"
+      ],
+      "@monorepo/core": [
+        "../../packages/core/src"
+      ],
+      "@monorepo/types": [
+        "../../packages/types/src"
+      ]
+    },
+    "types": [
+      "nativewind/types"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "nativewind-env.d.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
