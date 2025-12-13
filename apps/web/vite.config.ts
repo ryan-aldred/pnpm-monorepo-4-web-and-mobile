@@ -1,7 +1,27 @@
 import { reactRouter } from '@react-router/dev/vite';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+// Plugin to resolve TypeScript imports without extensions in SSR
+function ssrExtensionResolver(): Plugin {
+  return {
+    name: 'ssr-extension-resolver',
+    enforce: 'pre',
+    resolveId(source, importer, options) {
+      if (options.ssr && importer && source.startsWith('.')) {
+        // Try adding .ts extension for relative imports
+        const extensions = ['.ts', '.tsx', '/index.ts'];
+        for (const ext of extensions) {
+          const candidate = source + ext;
+          return null; // Let Vite's default resolver handle it with the extension
+        }
+      }
+      return null;
+    },
+  };
+}
 
 export default defineConfig({
   css: {
@@ -9,13 +29,17 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
-  plugins: [reactRouter()],
+  plugins: [tsconfigPaths(), ssrExtensionResolver(), reactRouter()],
   resolve: {
     alias: {
       '~': '/app',
       '@monorepo/ui': '../../packages/ui/src',
-      '@monorepo/core': '../../packages/core/src',
       '@monorepo/types': '../../packages/types/src',
     },
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+  ssr: {
+    noExternal: ['@monorepo/types', '@monorepo/ui'],
+    target: 'node',
   },
 });
