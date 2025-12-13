@@ -1,10 +1,19 @@
 import { View, Text, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { ENDPOINTS, useData } from '@monorepo/core';
+import { ENDPOINTS, getVader, useData } from '@monorepo/core';
 import { User } from '@monorepo/types';
+import { Button } from '@monorepo/ui';
+import { getLukeSkywalker } from '@monorepo/core';
+import { useState } from 'react';
 
 export default function HomeScreen() {
   const { data, loading, error } = useData<User[]>(ENDPOINTS.USERS);
+  const [luke, setLuke] = useState<string | null>(null);
+  const getSomeData = async () => {
+    const luke = await getLukeSkywalker();
+    const vader = await getVader();
+    setLuke(luke.name + ' ' + vader.name);
+  };
 
   if (loading) {
     return (
@@ -54,6 +63,9 @@ export default function HomeScreen() {
         </View>
         <View>
           <Text>Users that are</Text>
+          <Button onPress={getSomeData}>Click me</Button>
+          {luke && <Text>{luke}</Text>}
+
           {data &&
             data.map((user) => (
               <Text key={user.id}>

@@ -1,19 +1,37 @@
 {
   "name": "@monorepo/core",
   "version": "0.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
-    ".": "./src/index.ts",
-    "./api": "./src/api/index.ts",
-    "./hooks": "./src/hooks/index.ts",
-    "./utils": "./src/utils/index.ts",
-    "./data": "./src/data/index.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./api": {
+      "types": "./dist/api/index.d.mts",
+      "import": "./dist/api/index.mjs"
+    },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.mts",
+      "import": "./dist/hooks/index.mjs"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.mts",
+      "import": "./dist/utils/index.mjs"
+    },
+    "./data": {
+      "types": "./dist/data/index.d.mts",
+      "import": "./dist/data/index.mjs"
+    }
   },
   "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint src",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf node_modules"
+    "clean": "rm -rf node_modules dist"
   },
   "dependencies": {
     "@monorepo/types": "workspace:*",
@@ -24,6 +42,7 @@
     "@monorepo/config-eslint": "workspace:*",
     "@monorepo/config-typescript": "workspace:*",
     "@types/react": "^18.3.0",
+    "tsdown": "^0.17.3",
     "typescript": "^5.6.0"
   },
   "peerDependencies": {

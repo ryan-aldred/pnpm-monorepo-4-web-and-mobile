@@ -38,7 +38,15 @@ pnpm install
 
 This will install all dependencies for the root and all workspace packages.
 
-### 2. Start Development Servers
+### 2. Build Core Package
+
+The web app requires the core package to be built for SSR to work:
+
+```bash
+pnpm --filter @monorepo/core build
+```
+
+### 3. Start Development Servers
 
 #### Start both apps simultaneously:
 ```bash
@@ -62,7 +70,7 @@ pnpm dev:expo
 # Scan QR code for physical device
 ```
 
-### 3. Configure API URL for Expo
+### 4. Configure API URL for Expo
 
 For **simulators/emulators**, the default localhost URL works:
 ```bash
@@ -79,6 +87,40 @@ For **physical devices**, use your computer's local IP:
 # Then update .env:
 EXPO_PUBLIC_API_URL=http://192.168.1.100:5173
 ```
+
+### 5. Development Workflow with Package Building
+
+When working on the `@monorepo/core` package, you need to rebuild it for changes to appear in the web app's SSR. This is because React Router 7's SSR runs code in Node.js, which requires proper ES modules with file extensions.
+
+**Recommended workflow:**
+
+Option 1: Build on change (recommended)
+```bash
+# In one terminal
+pnpm --filter @monorepo/core dev
+
+# In another terminal
+pnpm dev:web
+```
+
+Option 2: Manual rebuild after changes
+```bash
+pnpm --filter @monorepo/core build
+# Then restart web dev server
+```
+
+**Why is this needed?**
+- React Router 7 SSR loads workspace packages directly via Node.js ESM
+- Node.js ESM requires explicit `.js` extensions in imports
+- TypeScript doesn't transpile source files, so we build to `dist/` with proper extensions
+- The built package maintains full type safety via `.d.ts` files
+- Tree-shaking and individual imports still work perfectly
+
+**What gets built:**
+- Source: `packages/core/src/**/*.ts`
+- Output: `packages/core/dist/**/*.js` + `.d.ts` + `.js.map`
+- You keep full TypeScript autocomplete and type checking
+- Import paths remain the same: `import { getUsers } from '@monorepo/core/data'`
 
 ## Project Structure
 
@@ -209,6 +251,13 @@ Use Tailwind classes that work on both platforms:
 - `pnpm lint` - Lint code
 - `pnpm type-check` - Check TypeScript types
 
+### Core Package (packages/core)
+
+- `pnpm build` - Build package (required for web SSR)
+- `pnpm dev` - Build package in watch mode
+- `pnpm type-check` - Check TypeScript types
+- `pnpm test` - Run tests with Vitest
+
 ## Adding New Packages
 
 To add a dependency to a specific workspace:
@@ -257,11 +306,23 @@ Use your computer's local IP instead of `localhost` in `EXPO_PUBLIC_API_URL`.
 
 Some Tailwind features work differently on native. Use platform-specific files for complex styling.
 
+### "Cannot find module" errors in web app SSR
+
+If you see errors like `Cannot find module '/packages/core/src/data/users'`:
+1. Make sure you've built the core package: `pnpm --filter @monorepo/core build`
+2. For active development, run the build in watch mode: `pnpm --filter @monorepo/core dev`
+3. Check that `packages/core/dist/` exists and contains `.js` files
+4. Clear Vite cache: `rm -rf apps/web/.react-router apps/web/node_modules/.vite`
+
 ## Production Build
 
-### Web App
+### Build All
 
 ```bash
+# Build packages first
+pnpm --filter @monorepo/core build
+
+# Then build web app
 pnpm build:web
 # Output: apps/web/build/
 # Deploy to: Vercel, Railway, Fly.io, etc.
