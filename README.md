@@ -16,6 +16,8 @@ A production-ready monorepo setup with Expo (React Native) and React Router 7 (w
 
 - 60-80% code reuse across platforms
 - TypeScript strict mode for maximum type safety
+- Comprehensive testing framework with Vitest (web) and Jest (mobile)
+- Custom test utilities for React Router 7 loader/action mocking
 - NativeWind (Tailwind CSS for React Native)
 - Platform-specific components via `.native.tsx` pattern
 - React Router 7 serves as both web app and API server
@@ -129,6 +131,10 @@ expo-rr7-prototype/
 ├── apps/
 │   ├── expo/                    # React Native mobile app
 │   │   ├── app/                 # Expo Router pages
+│   │   ├── tests/               # Test files
+│   │   ├── mocks/               # Mock files
+│   │   ├── test-utils/          # Testing utilities
+│   │   ├── jest.config.js       # Jest configuration
 │   │   ├── metro.config.js      # Critical monorepo config
 │   │   └── package.json
 │   └── web/                     # React Router 7 web app
@@ -136,6 +142,9 @@ expo-rr7-prototype/
 │       │   ├── routes/          # Pages and API routes
 │       │   │   └── api/         # API endpoints for Expo
 │       │   └── root.tsx
+│       ├── tests/               # Test files
+│       ├── test-utils/          # Testing utilities with mountWithWebContext
+│       ├── vitest.config.ts     # Vitest configuration
 │       ├── vite.config.ts
 │       └── package.json
 ├── packages/
@@ -156,7 +165,9 @@ expo-rr7-prototype/
 │   └── config/                  # Shared configs
 │       ├── typescript/
 │       ├── eslint/
-│       └── prettier/
+│       ├── prettier/
+│       └── vitest/              # Shared Vitest config
+├── TESTING.md                   # Testing documentation
 ├── pnpm-workspace.yaml
 └── package.json
 ```
@@ -229,6 +240,10 @@ Use Tailwind classes that work on both platforms:
 - `pnpm dev:web` - Start web app only
 - `pnpm dev:expo` - Start Expo app only
 - `pnpm build` - Build all apps
+- `pnpm test` - Run all tests
+- `pnpm test:web` - Run web tests (Vitest)
+- `pnpm test:expo` - Run Expo tests (Jest)
+- `pnpm test:packages` - Run package tests
 - `pnpm lint` - Lint all packages
 - `pnpm type-check` - Type check all packages
 - `pnpm format` - Format code with Prettier
@@ -239,6 +254,9 @@ Use Tailwind classes that work on both platforms:
 - `pnpm dev` - Start dev server
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
+- `pnpm test` - Run tests in watch mode
+- `pnpm test:ui` - Run tests with Vitest UI
+- `pnpm test:coverage` - Run tests with coverage
 - `pnpm lint` - Lint code
 - `pnpm type-check` - Check TypeScript types
 
@@ -248,6 +266,9 @@ Use Tailwind classes that work on both platforms:
 - `pnpm ios` - Start on iOS simulator
 - `pnpm android` - Start on Android emulator
 - `pnpm web` - Start Expo web version
+- `pnpm test` - Run tests
+- `pnpm test:watch` - Run tests in watch mode
+- `pnpm test:coverage` - Run tests with coverage
 - `pnpm lint` - Lint code
 - `pnpm type-check` - Check TypeScript types
 
@@ -256,7 +277,148 @@ Use Tailwind classes that work on both platforms:
 - `pnpm build` - Build package (required for web SSR)
 - `pnpm dev` - Build package in watch mode
 - `pnpm type-check` - Check TypeScript types
-- `pnpm test` - Run tests with Vitest
+
+## Testing
+
+This monorepo includes a comprehensive testing framework for both web and mobile applications.
+
+### Running Tests
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests for specific apps
+pnpm test:web      # Web app (Vitest)
+pnpm test:expo     # Expo app (Jest)
+
+# Run individual test files
+cd apps/web && pnpm test tests/example.test.tsx run
+cd apps/expo && pnpm test tests/example.test.tsx
+
+# Run tests matching a pattern
+cd apps/web && pnpm test "**/*Button*" run
+cd apps/expo && pnpm test Button
+
+# Run tests by name
+cd apps/web && pnpm test -t "renders component"
+cd apps/expo && pnpm test -t "renders component"
+
+# Run with coverage
+pnpm --filter @monorepo/web test:coverage
+pnpm --filter @monorepo/expo test:coverage
+```
+
+### Web Testing with `mountWithWebContext`
+
+The web app uses Vitest with a custom `mountWithWebContext` utility that makes it easy to test React Router 7 components with mocked loaders and actions.
+
+**Example: Mocking Loader Data**
+
+```typescript
+import { mountWithWebContext, screen } from '../test-utils';
+import { useLoaderData } from 'react-router';
+
+function UserProfile() {
+  const { user } = useLoaderData<typeof loader>();
+  return <div>{user.name}</div>;
+}
+
+it('displays user data from loader', () => {
+  mountWithWebContext(<UserProfile />, {
+    loader: {
+      data: { user: { id: 1, name: 'John Doe' } }
+    }
+  });
+
+  expect(screen.getByText('John Doe')).toBeInTheDocument();
+});
+```
+
+**Example: Mocking Actions**
+
+```typescript
+import { useActionData } from 'react-router';
+
+function LoginForm() {
+  const actionData = useActionData<typeof action>();
+  return (
+    <form>
+      {actionData?.errors && <div>{actionData.errors.username}</div>}
+    </form>
+  );
+}
+
+it('displays validation errors from action', () => {
+  mountWithWebContext(<LoginForm />, {
+    action: {
+      data: { errors: { username: 'Required field' } }
+    }
+  });
+
+  expect(screen.getByText('Required field')).toBeInTheDocument();
+});
+```
+
+### Expo Testing
+
+The Expo app uses Jest for testing. Currently supports:
+- ✅ Unit testing for business logic and utilities
+- ✅ Testing custom hooks
+- ✅ Jest mocking capabilities
+- ⚠️ React Native component testing requires additional setup
+
+**Example: Basic Test**
+
+```typescript
+import { describe, it, expect } from '@jest/globals';
+
+describe('My Feature', () => {
+  it('performs calculation correctly', () => {
+    const result = add(2, 3);
+    expect(result).toBe(5);
+  });
+});
+```
+
+### Test File Structure
+
+```
+apps/web/
+├── __tests__/              # Test files
+│   └── example.test.tsx
+└── test-utils/             # Testing utilities
+    ├── mountWithWebContext.tsx  # Custom test wrapper
+    └── index.ts
+
+apps/expo/
+├── __tests__/              # Test files
+│   └── example.test.tsx
+└── test-utils/             # Testing utilities
+    ├── mountWithAppContext.tsx  # Custom test wrapper (future)
+    └── setup.ts
+```
+
+### Extensible Test Wrappers
+
+Both test wrappers are designed to be extensible:
+
+```typescript
+// Create custom renderer with default config
+import { createWebRenderer } from '../test-utils';
+
+const render = createWebRenderer({
+  loader: { data: { defaultUser: mockUser } }
+});
+
+// Use in tests
+render(<MyComponent />); // Includes defaults
+render(<MyComponent />, {
+  loader: { data: { customData } }
+}); // Override defaults
+```
+
+For complete testing documentation, see [TESTING.md](./TESTING.md).
 
 ## Adding New Packages
 
@@ -314,6 +476,18 @@ If you see errors like `Cannot find module '/packages/core/src/data/users'`:
 3. Check that `packages/core/dist/` exists and contains `.js` files
 4. Clear Vite cache: `rm -rf apps/web/.react-router apps/web/node_modules/.vite`
 
+### Tests not running or failing
+
+**Web tests (Vitest):**
+- Check `vitest.config.ts` path aliases match your tsconfig
+- Run `pnpm install` to ensure all test dependencies are installed
+- Clear test cache: `rm -rf apps/web/node_modules/.vitest`
+
+**Expo tests (Jest):**
+- For React Native component testing issues, refer to [TESTING.md](./TESTING.md)
+- Jest transform errors: check `jest.config.js` `transformIgnorePatterns`
+- Module not found errors: verify `moduleNameMapper` paths are correct
+
 ## Production Build
 
 ### Build All
@@ -353,6 +527,7 @@ eas build --platform android
 - **Styling**: NativeWind (Tailwind CSS)
 - **Language**: TypeScript (strict mode)
 - **State**: Zustand
+- **Testing**: Vitest (web) + Jest (mobile)
 - **Linting**: ESLint + Prettier
 
 ## License
