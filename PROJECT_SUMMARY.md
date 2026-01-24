@@ -3,6 +3,7 @@
 ## What Was Built
 
 A production-ready pnpm monorepo with:
+
 - **Expo React Native mobile app**
 - **React Router 7 web app** (powered by Vite)
 - **Shared component library** with platform-specific implementations
@@ -13,6 +14,7 @@ A production-ready pnpm monorepo with:
 ## Workspace Packages
 
 ### Apps (2)
+
 1. **@monorepo/web** - React Router 7 web application
    - Location: `apps/web/`
    - Features: SSR, API routes, Vite, Tailwind CSS
@@ -59,30 +61,35 @@ A production-ready pnpm monorepo with:
 ## Key Features
 
 ### ✅ Code Sharing
+
 - **60-80% code reuse** between web and mobile
 - Platform-specific components via `.native.tsx` pattern
 - Shared business logic, types, and utilities
 - Single source of truth for API types
 
 ### ✅ TypeScript
+
 - Strict mode enabled across all packages
 - Type-safe API communication
 - No type errors in the entire monorepo
 - Shared TypeScript configurations
 
 ### ✅ Styling
+
 - NativeWind (Tailwind CSS for React Native)
 - Same class names work on both platforms
 - Consistent design system
 - Platform-specific styling when needed
 
 ### ✅ Architecture
+
 - React Router 7 handles all server logic
 - Expo app makes HTTP requests to API routes
 - Web app benefits from SSR and hydration
 - Clear separation of concerns
 
 ### ✅ Developer Experience
+
 - Single command to start both apps: `pnpm dev`
 - Hot reload across all workspace packages
 - Shared ESLint and Prettier configurations
@@ -101,6 +108,7 @@ All quality checks passing
 ## Example: Platform-Specific Components
 
 ### Button Component Structure
+
 ```
 packages/ui/src/components/Button/
 ├── Button.tsx         # Web: uses <button>
@@ -110,6 +118,7 @@ packages/ui/src/components/Button/
 ```
 
 ### Usage (Same in Both Apps)
+
 ```typescript
 import { Button } from '@monorepo/ui';
 
@@ -166,21 +175,26 @@ pnpm clean            # Clean all
 ## What Makes This Special
 
 ### 1. True Code Sharing
+
 Not just types - actual components, hooks, and business logic shared between web and mobile.
 
 ### 2. Platform-Specific When Needed
+
 Automatic platform resolution via `.native.tsx` extension. No runtime checks needed.
 
 ### 3. Type-Safe End-to-End
+
 From API response to UI components, full TypeScript type safety with strict mode.
 
 ### 4. Modern Tooling
+
 - pnpm for fast installs
 - Vite for instant HMR
 - Expo for easy mobile development
 - Turborepo for build caching
 
 ### 5. Production Ready
+
 - ESLint + Prettier configured
 - All type checks passing
 - Clear build and deployment strategy
@@ -216,15 +230,15 @@ From API response to UI components, full TypeScript type safety with strict mode
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
+| Layer    | Technology                  |
+| -------- | --------------------------- |
 | Monorepo | pnpm workspaces + Turborepo |
-| Web | React Router 7 + Vite |
-| Mobile | Expo + React Native |
-| Styling | NativeWind (Tailwind CSS) |
-| Language | TypeScript (strict mode) |
-| State | Zustand |
-| Linting | ESLint + Prettier |
+| Web      | React Router 7 + Vite       |
+| Mobile   | Expo + React Native         |
+| Styling  | NativeWind (Tailwind CSS)   |
+| Language | TypeScript (strict mode)    |
+| State    | Zustand                     |
+| Linting  | ESLint + Prettier           |
 
 ## Success Metrics
 

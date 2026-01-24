@@ -1,4 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
+import { useRouter } from 'expo-router';
 
 // Simple utility function to test
 function add(a: number, b: number): number {
@@ -33,7 +34,6 @@ describe('Expo testing setup verification', () => {
 
 describe('Test utilities are available', () => {
   it('has expo-router mocks available', () => {
-    const { useRouter } = require('expo-router');
     const router = useRouter();
 
     expect(router).toBeDefined();

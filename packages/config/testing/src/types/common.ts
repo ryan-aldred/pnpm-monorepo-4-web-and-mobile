@@ -1,5 +1,8 @@
 import type { ComponentType } from 'react';
-import type { ZustandStoresConfig, SimpleZustandStoresConfig } from '../zustand/types';
+import type {
+  ZustandStoresConfig,
+  SimpleZustandStoresConfig,
+} from '../zustand/types';
 
 /**
  * Common mock provider configuration

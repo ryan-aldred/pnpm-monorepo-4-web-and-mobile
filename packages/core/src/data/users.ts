@@ -1,7 +1,7 @@
 import type { User } from '@monorepo/types';
 
 // Mock DB - replace with real database later
-let users: User[] = [
+export const users: User[] = [
   { id: 1, name: 'John Doe', email: 'john@example.com' },
   { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
   { id: 3, name: 'Bob Johnson', email: 'bob@example.com' },
@@ -12,7 +12,7 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUserById(id: number): Promise<User | null> {
-  return users.find(u => u.id === id) || null;
+  return users.find((u) => u.id === id) || null;
 }
 
 export async function createUser(data: Omit<User, 'id'>): Promise<User> {
@@ -22,7 +22,7 @@ export async function createUser(data: Omit<User, 'id'>): Promise<User> {
 }
 
 export async function deleteUser(id: number): Promise<boolean> {
-  const index = users.findIndex(u => u.id === id);
+  const index = users.findIndex((u) => u.id === id);
   if (index === -1) return false;
   users.splice(index, 1);
   return true;

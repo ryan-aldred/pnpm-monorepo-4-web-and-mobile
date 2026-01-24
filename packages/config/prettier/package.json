@@ -2,7 +2,9 @@
   "name": "@monorepo/config-prettier",
   "version": "0.0.0",
   "main": ".prettierrc.js",
-  "files": [".prettierrc.js"],
+  "files": [
+    ".prettierrc.js"
+  ],
   "dependencies": {
     "prettier": "^3.1.1"
   }

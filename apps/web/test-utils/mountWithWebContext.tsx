@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { createRoutesStub } from 'react-router';
 import { render, type RenderResult } from '@testing-library/react';
@@ -63,7 +64,7 @@ export function mountWithWebContext(
     : undefined;
 
   // Build the route configuration
-  const stubRoutes = [
+  const stubRoutes: any[] = [
     {
       path: '/',
       Component: () => component,
@@ -131,7 +132,10 @@ export function createWebRenderer(defaultConfig: WebContextConfig = {}) {
         ...defaultConfig.zustandStores,
         ...config.zustandStores,
       },
-      mockProviders: [...(defaultConfig.mockProviders || []), ...(config.mockProviders || [])],
+      mockProviders: [
+        ...(defaultConfig.mockProviders || []),
+        ...(config.mockProviders || []),
+      ],
     };
     return mountWithWebContext(component, mergedConfig);
   };

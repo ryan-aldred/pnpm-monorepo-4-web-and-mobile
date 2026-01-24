@@ -1,5 +1,5 @@
 module.exports = {
   root: true,
-  extends: ['@monorepo/config-eslint/react'],
+  extends: [require.resolve('@monorepo/config-eslint/react')],
   ignorePatterns: ['build/', '.react-router/'],
 };

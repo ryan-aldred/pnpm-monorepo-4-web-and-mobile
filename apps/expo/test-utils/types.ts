@@ -1,4 +1,3 @@
-import type { ComponentType } from 'react';
 import type {
   BaseContextConfig,
   MockProviderConfig,

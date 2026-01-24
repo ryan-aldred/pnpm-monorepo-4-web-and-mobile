@@ -40,15 +40,15 @@ cd apps/expo && pnpm test -t "renders component"  # Jest: run test with matching
 
 ### Common Commands
 
-| Action | Web (Vitest) | Expo (Jest) |
-|--------|-------------|-------------|
-| Run all tests | `cd apps/web && pnpm test run` | `cd apps/expo && pnpm test` |
-| Watch mode | `cd apps/web && pnpm test` | `cd apps/expo && pnpm test:watch` |
-| Single file | `pnpm test path/to/file.test.tsx run` | `pnpm test path/to/file.test.tsx` |
-| Pattern match | `pnpm test "**/*Button*" run` | `pnpm test Button` |
-| By test name | `pnpm test -t "test name"` | `pnpm test -t "test name"` |
-| With coverage | `pnpm test:coverage` | `pnpm test:coverage` |
-| With UI | `pnpm test:ui` | N/A |
+| Action        | Web (Vitest)                          | Expo (Jest)                       |
+| ------------- | ------------------------------------- | --------------------------------- |
+| Run all tests | `cd apps/web && pnpm test run`        | `cd apps/expo && pnpm test`       |
+| Watch mode    | `cd apps/web && pnpm test`            | `cd apps/expo && pnpm test:watch` |
+| Single file   | `pnpm test path/to/file.test.tsx run` | `pnpm test path/to/file.test.tsx` |
+| Pattern match | `pnpm test "**/*Button*" run`         | `pnpm test Button`                |
+| By test name  | `pnpm test -t "test name"`            | `pnpm test -t "test name"`        |
+| With coverage | `pnpm test:coverage`                  | `pnpm test:coverage`              |
+| With UI       | `pnpm test:ui`                        | N/A                               |
 
 **Note**: All commands assume you're in the app directory (`apps/web` or `apps/expo`)
 

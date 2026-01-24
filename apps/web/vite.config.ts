@@ -13,8 +13,7 @@ function ssrExtensionResolver(): Plugin {
       if (options.ssr && importer && source.startsWith('.')) {
         // Try adding .ts extension for relative imports
         const extensions = ['.ts', '.tsx', '/index.ts'];
-        for (const ext of extensions) {
-          const candidate = source + ext;
+        for (const _ext of extensions) {
           return null; // Let Vite's default resolver handle it with the extension
         }
       }

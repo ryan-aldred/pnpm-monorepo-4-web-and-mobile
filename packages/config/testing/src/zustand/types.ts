@@ -3,7 +3,8 @@ import type { StoreApi, UseBoundStore } from 'zustand';
 /**
  * Extracts the state type from a Zustand store
  */
-export type ExtractState<S> = S extends UseBoundStore<StoreApi<infer T>> ? T : never;
+export type ExtractState<S> =
+  S extends UseBoundStore<StoreApi<infer T>> ? T : never;
 
 /**
  * Configuration for mocking a single Zustand store
@@ -16,7 +17,7 @@ export interface MockStoreConfig<TState> {
   /** Mock implementations for actions/functions in the store */
   mockActions?: {
     [K in keyof TState]?: TState[K] extends (...args: any[]) => any
-      ? ((...args: any[]) => any)
+      ? (...args: any[]) => any
       : never;
   };
 }

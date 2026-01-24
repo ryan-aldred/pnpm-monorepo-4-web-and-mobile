@@ -13,7 +13,10 @@ export default defineConfig({
       '@monorepo/ui': path.resolve(__dirname, '../../packages/ui/src'),
       '@monorepo/core': path.resolve(__dirname, '../../packages/core/src'),
       '@monorepo/types': path.resolve(__dirname, '../../packages/types/src'),
-      '@monorepo/config-testing': path.resolve(__dirname, '../../packages/config/testing/src'),
+      '@monorepo/config-testing': path.resolve(
+        __dirname,
+        '../../packages/config/testing/src'
+      ),
     },
   },
   ...createVitestConfig(__dirname),

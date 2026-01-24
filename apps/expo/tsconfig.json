@@ -3,22 +3,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./app/*"
-      ],
-      "@monorepo/ui": [
-        "../../packages/ui/src"
-      ],
-      "@monorepo/core": [
-        "../../packages/core/src"
-      ],
-      "@monorepo/types": [
-        "../../packages/types/src"
-      ]
+      "@/*": ["./app/*"],
+      "@monorepo/ui": ["../../packages/ui/src"],
+      "@monorepo/core": ["../../packages/core/src"],
+      "@monorepo/types": ["../../packages/types/src"],
+      "@monorepo/mocks/*": ["../../packages/mocks/src/*"]
     },
-    "types": [
-      "nativewind/types"
-    ]
+    "types": ["nativewind/types", "jest"]
   },
   "include": [
     "**/*.ts",
@@ -27,7 +18,5 @@
     "nativewind-env.d.ts",
     "expo-env.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
