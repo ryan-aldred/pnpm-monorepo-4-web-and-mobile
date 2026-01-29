@@ -1,4 +1,5 @@
 import { reactRouter } from '@react-router/dev/vite';
+import { cloudflareDevProxy } from '@react-router/dev/vite/cloudflare';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
 import { defineConfig, Plugin } from 'vite';
@@ -28,17 +29,23 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
-  plugins: [tsconfigPaths(), ssrExtensionResolver(), reactRouter()],
+  plugins: [
+    tsconfigPaths(),
+    ssrExtensionResolver(),
+    cloudflareDevProxy(),
+    reactRouter(),
+  ],
   resolve: {
     alias: {
       '~': '/app',
       '@monorepo/ui': '../../packages/ui/src',
       '@monorepo/types': '../../packages/types/src',
+      '@monorepo/database': '../../packages/database/src/index.ts',
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   ssr: {
-    noExternal: ['@monorepo/types', '@monorepo/ui'],
-    target: 'node',
+    noExternal: ['@monorepo/types', '@monorepo/ui', '@monorepo/database'],
+    target: 'webworker',
   },
 });

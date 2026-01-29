@@ -1,0 +1,21 @@
+name = "monorepo-web"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+main = "./build/server/index.js"
+
+[assets]
+directory = "./build/client"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "monorepo-db"
+database_id = "8f9ac383-dcbf-4764-a092-d4bb48573567"
+
+[vars]
+ENVIRONMENT = "development"
+
+[env.production]
+name = "monorepo-web-prod"
+[env.production.vars]
+ENVIRONMENT = "production"

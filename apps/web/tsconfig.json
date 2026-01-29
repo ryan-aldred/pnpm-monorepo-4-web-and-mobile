@@ -6,9 +6,10 @@
       "~/*": ["./app/*"],
       "@monorepo/ui": ["../../packages/ui/src"],
       "@monorepo/core": ["../../packages/core/src"],
-      "@monorepo/types": ["../../packages/types/src"]
+      "@monorepo/types": ["../../packages/types/src"],
+      "@monorepo/database": ["../../packages/database/src/index.ts"]
     },
-    "types": ["@react-router/node", "vite/client", "@testing-library/jest-dom"]
+    "types": ["@cloudflare/workers-types", "vite/client", "@testing-library/jest-dom"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "build"]

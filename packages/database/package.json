@@ -1,0 +1,37 @@
+{
+  "name": "@monorepo/database",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./schema": {
+      "types": "./dist/schema/index.d.mts",
+      "import": "./dist/schema/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf node_modules dist migrations"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.38.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "@monorepo/config-eslint": "workspace:*",
+    "@monorepo/config-typescript": "workspace:*",
+    "drizzle-kit": "^0.30.0",
+    "tsdown": "^0.17.3",
+    "typescript": "^5.6.0"
+  }
+}

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently -n \"core,web,expo\" \"pnpm --filter @monorepo/core dev\" \"pnpm --filter @monorepo/web dev\" \"pnpm --filter @monorepo/expo dev\"",
     "dev:expo": "concurrently -n \"core,expo\" \"pnpm --filter @monorepo/core dev\" \"pnpm --filter @monorepo/expo dev\"",
-    "dev:web": "concurrently -n \"core,web\" \"pnpm --filter @monorepo/core dev\" \"pnpm --filter @monorepo/web dev\"",
+    "dev:web": "concurrently -n \"core,database,web\" \"pnpm --filter @monorepo/core dev\" \"pnpm --filter @monorepo/database dev\" \"pnpm --filter @monorepo/web dev\"",
     "build": "pnpm run --filter './packages/*' build && pnpm run --filter './apps/*' build",
     "build:expo": "pnpm --filter @monorepo/expo build",
     "build:web": "pnpm --filter @monorepo/web build",
@@ -17,7 +17,13 @@
     "lint": "ESLINT_USE_FLAT_CONFIG=false pnpm run --recursive lint",
     "type-check": "pnpm run --recursive type-check",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "clean": "pnpm run --recursive clean && rm -rf node_modules"
+    "clean": "pnpm run --recursive clean && rm -rf node_modules",
+    "db:generate": "pnpm --filter @monorepo/database db:generate",
+    "db:studio": "pnpm --filter @monorepo/database db:studio",
+    "db:migrate:local": "pnpm --filter @monorepo/web d1:migrate:local",
+    "db:migrate:remote": "pnpm --filter @monorepo/web d1:migrate:remote",
+    "wrangler": "pnpm --filter @monorepo/web exec wrangler",
+    "deploy:web": "pnpm --filter @monorepo/web deploy"
   },
   "devDependencies": {
     "@monorepo/config-eslint": "workspace:*",
