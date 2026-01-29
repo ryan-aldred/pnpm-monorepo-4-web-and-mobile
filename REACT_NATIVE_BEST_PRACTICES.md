@@ -24,11 +24,13 @@ A comprehensive guide for React web developers transitioning to React Native wit
 ### Key Differences from React Web
 
 **Component Model**
+
 - **Web**: DOM elements (`<div>`, `<span>`, `<button>`)
 - **Native**: React Native components (`<View>`, `<Text>`, `<Pressable>`)
 - **No HTML**: You cannot use any HTML elements in React Native
 
 **Styling**
+
 - **Web**: CSS files, CSS-in-JS, Tailwind via className
 - **Native**: StyleSheet API, inline styles only (no external CSS files)
 - **With NativeWind**: Tailwind-like classes work on both platforms
@@ -36,14 +38,17 @@ A comprehensive guide for React web developers transitioning to React Native wit
 - **Units**: No `px`, `rem`, `em` - use density-independent pixels (numbers)
 
 **Event Handling**
+
 - **Web**: `onClick`, `onChange`, `onSubmit`
 - **Native**: `onPress`, `onChangeText`, no form submission
 
 **Browser APIs Don't Exist**
+
 - No `window`, `document`, `localStorage`, `sessionStorage`
 - Use Expo/React Native equivalents: `AsyncStorage`, `SecureStore`, `Linking`
 
 **Navigation**
+
 - **Web**: React Router, URL-based routing
 - **Native**: Stack-based navigation (Expo Router, React Navigation)
 
@@ -54,6 +59,7 @@ A comprehensive guide for React web developers transitioning to React Native wit
 ### TypeScript Configuration
 
 **Strict Mode is Essential**
+
 ```json
 // packages/config-typescript/base.json
 {
@@ -69,6 +75,7 @@ A comprehensive guide for React web developers transitioning to React Native wit
 ```
 
 **Expo-Specific TypeScript**
+
 ```json
 // apps/expo/tsconfig.json
 {
@@ -84,16 +91,19 @@ A comprehensive guide for React web developers transitioning to React Native wit
 ### Environment Variables
 
 **Web**: Use `import.meta.env.VITE_*`
+
 ```typescript
 const apiUrl = import.meta.env.VITE_API_URL;
 ```
 
 **Expo**: Use `process.env.EXPO_PUBLIC_*`
+
 ```typescript
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 ```
 
 **Best Practice**: Create platform-specific config files
+
 ```typescript
 // packages/core/src/config/config.native.ts
 export const config = {
@@ -129,11 +139,7 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
     const packageName = moduleName.split('/')[1];
     const packagePath = path.join(monorepoRoot, 'packages', packageName);
 
-    return context.resolveRequest(
-      context,
-      packagePath,
-      platform
-    );
+    return context.resolveRequest(context, packagePath, platform);
   }
   return context.resolveRequest(context, moduleName, platform);
 };
@@ -148,6 +154,7 @@ module.exports = config;
 ### Use Primitives, Not DOM Elements
 
 **Bad (won't work)**
+
 ```tsx
 // ❌ This will crash in React Native
 function MyComponent() {
@@ -161,6 +168,7 @@ function MyComponent() {
 ```
 
 **Good**
+
 ```tsx
 // ✅ Use React Native primitives
 import { View, Text, Pressable } from 'react-native';
@@ -178,6 +186,7 @@ function MyComponent() {
 ```
 
 **Best Practice**: Create shared primitives
+
 ```typescript
 // packages/ui/src/primitives/View.tsx
 export { View } from 'react-native';
@@ -240,6 +249,7 @@ export type { ButtonProps } from './types';
 ```
 
 **Import remains the same on both platforms**:
+
 ```typescript
 import { Button } from '@monorepo/ui';
 ```
@@ -247,6 +257,7 @@ import { Button } from '@monorepo/ui';
 ### Component Patterns
 
 **Always use functional components with hooks**
+
 ```typescript
 // ✅ Good
 function UserProfile({ userId }: { userId: string }) {
@@ -266,6 +277,7 @@ class UserProfile extends React.Component {
 ```
 
 **Props should always be strongly typed**
+
 ```typescript
 interface UserCardProps {
   user: User;
@@ -287,6 +299,7 @@ function UserCard({ user, onPress, showAvatar = true }: UserCardProps) {
 NativeWind allows you to use Tailwind-style classes on both web and native.
 
 **Setup**
+
 ```bash
 pnpm --filter @monorepo/expo add nativewind tailwindcss
 ```
@@ -306,6 +319,7 @@ module.exports = {
 ```
 
 **Usage**
+
 ```tsx
 import { View, Text } from 'react-native';
 
@@ -322,15 +336,19 @@ function Card() {
 ### Styling Rules
 
 **1. Flexbox is Default**
+
 ```tsx
 // Every View is display: flex by default
-<View className="flex-row">  {/* flex-direction: row */}
+<View className="flex-row">
+  {' '}
+  {/* flex-direction: row */}
   <View className="flex-1">First</View>
   <View className="flex-1">Second</View>
 </View>
 ```
 
 **2. No CSS Grid**
+
 ```tsx
 // ❌ CSS Grid doesn't exist in React Native
 <View className="grid grid-cols-2">
@@ -343,6 +361,7 @@ function Card() {
 ```
 
 **3. Avoid Complex Selectors**
+
 ```tsx
 // ❌ No pseudo-selectors like :hover, :active
 <View className="hover:bg-blue-500">
@@ -365,6 +384,7 @@ function PressableCard() {
 ```
 
 **4. Safe Area Handling**
+
 ```tsx
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -379,6 +399,7 @@ function HomeScreen() {
 ```
 
 **5. Platform-Specific Styles**
+
 ```typescript
 import { Platform, StyleSheet } from 'react-native';
 
@@ -422,6 +443,7 @@ apps/expo/app/
 ```
 
 **Root Layout**
+
 ```typescript
 // apps/expo/app/_layout.tsx
 import { Stack } from 'expo-router';
@@ -437,6 +459,7 @@ export default function Layout() {
 ```
 
 **Navigation Between Screens**
+
 ```typescript
 import { router } from 'expo-router';
 
@@ -460,6 +483,7 @@ function HomeScreen() {
 ```
 
 **Dynamic Route Params**
+
 ```typescript
 // apps/expo/app/user/[id].tsx
 import { useLocalSearchParams } from 'expo-router';
@@ -476,6 +500,7 @@ export default function UserScreen() {
 ```
 
 **Type-Safe Navigation**
+
 ```typescript
 // packages/types/src/navigation.ts
 export type RootStackParamList = {
@@ -491,7 +516,7 @@ import type { RootStackParamList } from '@monorepo/types';
 function navigate() {
   router.push<'/user/[id]'>({
     pathname: '/user/[id]',
-    params: { id: '123' }
+    params: { id: '123' },
   });
 }
 ```
@@ -564,6 +589,7 @@ function ProfileScreen() {
 ### Persistent State
 
 **Web**: localStorage
+
 ```typescript
 const saveToken = (token: string) => {
   localStorage.setItem('auth_token', token);
@@ -571,6 +597,7 @@ const saveToken = (token: string) => {
 ```
 
 **Native**: AsyncStorage
+
 ```typescript
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -584,6 +611,7 @@ const getToken = async (): Promise<string | null> => {
 ```
 
 **Shared Hook**
+
 ```typescript
 // packages/core/src/hooks/useAsyncStorage.native.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -597,7 +625,8 @@ export const useAsyncStorage = () => ({
 // packages/core/src/hooks/useAsyncStorage.ts (web)
 export const useAsyncStorage = () => ({
   getItem: (key: string) => Promise.resolve(localStorage.getItem(key)),
-  setItem: (key: string, value: string) => Promise.resolve(localStorage.setItem(key, value)),
+  setItem: (key: string, value: string) =>
+    Promise.resolve(localStorage.setItem(key, value)),
   removeItem: (key: string) => Promise.resolve(localStorage.removeItem(key)),
 });
 ```
@@ -743,12 +772,13 @@ function UsersScreen() {
 ### Lists: Use FlatList, Not .map()
 
 **Bad**
+
 ```tsx
 // ❌ Don't use .map() for large lists - will render everything at once
 function UsersList({ users }: { users: User[] }) {
   return (
     <ScrollView>
-      {users.map(user => (
+      {users.map((user) => (
         <UserCard key={user.id} user={user} />
       ))}
     </ScrollView>
@@ -757,6 +787,7 @@ function UsersList({ users }: { users: User[] }) {
 ```
 
 **Good**
+
 ```tsx
 // ✅ FlatList only renders visible items (virtualized)
 import { FlatList } from 'react-native';
@@ -766,7 +797,7 @@ function UsersList({ users }: { users: User[] }) {
     <FlatList
       data={users}
       renderItem={({ item }) => <UserCard user={item} />}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       // Performance optimizations
       removeClippedSubviews={true}
       maxToRenderPerBatch={10}
@@ -779,6 +810,7 @@ function UsersList({ users }: { users: User[] }) {
 ### Memoization
 
 **React.memo for Components**
+
 ```typescript
 import { memo } from 'react';
 
@@ -799,6 +831,7 @@ export const UserCard = memo(function UserCard({ user, onPress }: UserCardProps)
 ```
 
 **useMemo and useCallback**
+
 ```typescript
 function UsersList({ users }: { users: User[] }) {
   // Memoize expensive computations
@@ -845,15 +878,19 @@ function Avatar({ uri }: { uri: string }) {
 ### Avoid Anonymous Functions in Renders
 
 **Bad**
+
 ```tsx
 // ❌ Creates new function on every render
 <FlatList
   data={users}
-  renderItem={(item) => <UserCard user={item} onPress={(id) => router.push(`/user/${id}`)} />}
+  renderItem={(item) => (
+    <UserCard user={item} onPress={(id) => router.push(`/user/${id}`)} />
+  )}
 />
 ```
 
 **Good**
+
 ```tsx
 // ✅ Stable function references
 function UsersList({ users }: { users: User[] }) {
@@ -861,9 +898,12 @@ function UsersList({ users }: { users: User[] }) {
     router.push(`/user/${id}`);
   }, []);
 
-  const renderItem = useCallback(({ item }: { item: User }) => (
-    <UserCard user={item} onPress={handlePress} />
-  ), [handlePress]);
+  const renderItem = useCallback(
+    ({ item }: { item: User }) => (
+      <UserCard user={item} onPress={handlePress} />
+    ),
+    [handlePress]
+  );
 
   return (
     <FlatList
@@ -929,6 +969,7 @@ packages/ui/src/components/Button/
 ```
 
 **Resolution Order**:
+
 1. `.ios.tsx` or `.android.tsx` (platform-specific)
 2. `.native.tsx` (all native platforms)
 3. `.tsx` (default/web)
@@ -1240,15 +1281,18 @@ function useLocalState<T>(key: string, initialValue: T) {
   const [state, setState] = useState<T>(initialValue);
 
   useEffect(() => {
-    AsyncStorage.getItem(key).then(value => {
+    AsyncStorage.getItem(key).then((value) => {
       if (value) setState(JSON.parse(value) as T);
     });
   }, [key]);
 
-  const setValue = useCallback((value: T) => {
-    setState(value);
-    AsyncStorage.setItem(key, JSON.stringify(value));
-  }, [key]);
+  const setValue = useCallback(
+    (value: T) => {
+      setState(value);
+      AsyncStorage.setItem(key, JSON.stringify(value));
+    },
+    [key]
+  );
 
   return [state, setValue] as const;
 }
@@ -1263,21 +1307,21 @@ const [user, setUser] = useLocalState<User | null>('user', null);
 
 ### Web → Native Equivalents
 
-| Web | React Native |
-|-----|--------------|
-| `<div>` | `<View>` |
-| `<span>`, `<p>`, `<h1>` | `<Text>` |
-| `<button>` | `<Pressable>` or `<TouchableOpacity>` |
-| `<input>` | `<TextInput>` |
-| `<img>` | `<Image>` from `expo-image` |
-| `<ul>`, `<ol>` | `<FlatList>` or `<SectionList>` |
-| `<a>` | `<Link>` from `expo-router` |
-| `onClick` | `onPress` |
-| `onChange` | `onChangeText` |
-| `localStorage` | `AsyncStorage` |
-| `window.location` | `router` from `expo-router` |
-| CSS files | `StyleSheet.create()` or NativeWind |
-| `fetch()` | `fetch()` (works the same) |
+| Web                     | React Native                          |
+| ----------------------- | ------------------------------------- |
+| `<div>`                 | `<View>`                              |
+| `<span>`, `<p>`, `<h1>` | `<Text>`                              |
+| `<button>`              | `<Pressable>` or `<TouchableOpacity>` |
+| `<input>`               | `<TextInput>`                         |
+| `<img>`                 | `<Image>` from `expo-image`           |
+| `<ul>`, `<ol>`          | `<FlatList>` or `<SectionList>`       |
+| `<a>`                   | `<Link>` from `expo-router`           |
+| `onClick`               | `onPress`                             |
+| `onChange`              | `onChangeText`                        |
+| `localStorage`          | `AsyncStorage`                        |
+| `window.location`       | `router` from `expo-router`           |
+| CSS files               | `StyleSheet.create()` or NativeWind   |
+| `fetch()`               | `fetch()` (works the same)            |
 
 ### Key Packages
 

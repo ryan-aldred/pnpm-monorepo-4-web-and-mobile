@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { render, type RenderAPI } from '@testing-library/react-native';
@@ -35,7 +36,12 @@ export function mountWithMobileContext(
   component: React.ReactElement,
   config: MobileContextConfig = {}
 ): RenderAPI {
-  const { navigation = {}, zustandStores, mockProviders = [], expoModules = {} } = config;
+  const {
+    navigation: _navigation = {},
+    zustandStores,
+    mockProviders = [],
+    expoModules = {},
+  } = config;
 
   // Note: Expo modules should generally be mocked via jest.mock() in setup.ts
   // This warning is kept for cases where runtime mocking is attempted
@@ -46,9 +52,9 @@ export function mountWithMobileContext(
   }
 
   // Build the wrapper component
-  let Wrapper: React.ComponentType<{ children: React.ReactNode }> = ({ children }) => (
-    <NavigationContainer>{children}</NavigationContainer>
-  );
+  let Wrapper: React.ComponentType<{ children: React.ReactNode }> = ({
+    children,
+  }) => <NavigationContainer>{children}</NavigationContainer>;
 
   // Apply Zustand store mocking if configured
   if (zustandStores && Object.keys(zustandStores).length > 0) {
@@ -99,7 +105,10 @@ export function createMobileRenderer(defaultConfig: MobileContextConfig = {}) {
         ...defaultConfig.zustandStores,
         ...config.zustandStores,
       },
-      mockProviders: [...(defaultConfig.mockProviders || []), ...(config.mockProviders || [])],
+      mockProviders: [
+        ...(defaultConfig.mockProviders || []),
+        ...(config.mockProviders || []),
+      ],
     };
     return mountWithMobileContext(component, mergedConfig);
   };

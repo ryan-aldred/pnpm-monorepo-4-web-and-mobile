@@ -11,7 +11,7 @@ interface AuthState {
 export const useAuth = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
-  login: async (email: string, password: string) => {
+  login: async (email: string, _password: string) => {
     // In a real app, this would call the API
     // For now, just simulate a login
     set({

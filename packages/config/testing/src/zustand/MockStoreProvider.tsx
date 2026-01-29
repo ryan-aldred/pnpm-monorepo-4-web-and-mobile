@@ -48,10 +48,16 @@ interface MockStoreProviderProps {
  * </MockStoreProvider>
  * ```
  */
-export function MockStoreProvider({ children, stores }: MockStoreProviderProps) {
+export function MockStoreProvider({
+  children,
+  stores,
+}: MockStoreProviderProps) {
   // Create mock stores once during initial render
   const storeMap = useMemo(() => {
-    const map = new Map<UseBoundStore<StoreApi<any>>, UseBoundStore<StoreApi<any>>>();
+    const map = new Map<
+      UseBoundStore<StoreApi<any>>,
+      UseBoundStore<StoreApi<any>>
+    >();
 
     Object.values(stores).forEach((config) => {
       const { store, ...restConfig } = config;

@@ -55,7 +55,10 @@ export function createMockStore<TState>(
   mockStore.getState = () => currentState;
 
   mockStore.setState = (
-    partial: TState | Partial<TState> | ((state: TState) => TState | Partial<TState>),
+    partial:
+      | TState
+      | Partial<TState>
+      | ((state: TState) => TState | Partial<TState>),
     replace?: boolean
   ) => {
     const prevState = currentState;
@@ -64,12 +67,16 @@ export function createMockStore<TState>(
         ? (partial as (state: TState) => TState | Partial<TState>)(currentState)
         : partial;
 
-    currentState = replace ? (nextState as TState) : { ...currentState, ...nextState };
+    currentState = replace
+      ? (nextState as TState)
+      : { ...currentState, ...nextState };
 
     listeners.forEach((listener) => listener(currentState, prevState));
   };
 
-  mockStore.subscribe = (listener: (state: TState, prevState: TState) => void) => {
+  mockStore.subscribe = (
+    listener: (state: TState, prevState: TState) => void
+  ) => {
     listeners.add(listener);
     return () => listeners.delete(listener);
   };
@@ -88,7 +95,9 @@ export function createMockStore<TState>(
  * Resets a mock store to its initial state
  * Useful for cleaning up between tests
  */
-export function resetMockStore<TState>(mockStore: UseBoundStore<StoreApi<TState>>): void {
+export function resetMockStore<TState>(
+  mockStore: UseBoundStore<StoreApi<TState>>
+): void {
   const initialState = mockStore.getInitialState();
   mockStore.setState(initialState, true);
 }

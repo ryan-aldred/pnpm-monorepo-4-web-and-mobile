@@ -13,7 +13,8 @@ module.exports = {
     '^@monorepo/core$': '<rootDir>/../../packages/core/src',
     '^@monorepo/types$': '<rootDir>/../../packages/types/src',
     '^@monorepo/config-testing$': '<rootDir>/../../packages/config/testing/src',
-    '^@monorepo/config-testing/(.*)$': '<rootDir>/../../packages/config/testing/src/$1',
+    '^@monorepo/config-testing/(.*)$':
+      '<rootDir>/../../packages/config/testing/src/$1',
     '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/mocks/fileMock.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],

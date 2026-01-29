@@ -1,11 +1,5 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
-import {
-  getC3p0,
-  getLukeSkywalker,
-  getR2,
-  getUsers,
-  getVader,
-} from '@monorepo/core/data';
+import { getUsers } from '@monorepo/core/data';
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,23 +10,23 @@ export const meta: MetaFunction = () => {
 
 export async function loader() {
   const users = await getUsers();
-  const luke = await getLukeSkywalker();
-  const c3po = await getC3p0();
-  const vader = await getVader();
-  const r2 = await getR2();
+  // const luke = await getLukeSkywalker();
+  // const c3po = await getC3p0();
+  // const vader = await getVader();
+  // const r2 = await getR2();
   return {
     greeting: 'Hello fuckface',
-    luke,
-    r2,
-    c3po,
-    vader,
+    // luke,
+    // r2,
+    // c3po,
+    // vader,
     users,
   };
 }
 
 export default function Home() {
-  const { greeting, users, luke, r2, c3po, vader } =
-    useLoaderData<typeof loader>();
+  // const { greeting, users, luke, r2, c3po, vader } =
+  const { greeting, users } = useLoaderData<typeof loader>();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
@@ -58,12 +52,12 @@ export default function Home() {
         </div>
         <div>
           <ul>
-            {luke.name} - {luke.birth_year}
+            {/* {luke.name} - {luke.birth_year}
             {r2.name} - {r2.skin_color}
             {c3po.name} - {c3po.skin_color}
             <h2>
               {vader.name} - {vader.skin_color}
-            </h2>
+            </h2> */}
             {users.map((user) => (
               <li key={user.id}>
                 {user.name} - {user.email}

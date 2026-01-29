@@ -22,6 +22,7 @@ pnpm install
 ```
 
 This will install all dependencies for:
+
 - Root workspace
 - Web app (React Router 7)
 - Expo app (React Native)
@@ -30,12 +31,14 @@ This will install all dependencies for:
 ## 3. Configure Expo API URL
 
 For development with simulators/emulators (default):
+
 ```bash
 cp apps/expo/.env.example apps/expo/.env
 # File will have: EXPO_PUBLIC_API_URL=http://localhost:5173
 ```
 
 For development with physical devices:
+
 ```bash
 # Find your local IP address
 # macOS/Linux: ifconfig | grep "inet "
@@ -50,22 +53,27 @@ echo "EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:5173" > apps/expo/.env
 Open two terminal windows:
 
 **Terminal 1 - Web App:**
+
 ```bash
 pnpm dev:web
 ```
+
 - Opens at http://localhost:5173
 - Serves both the web UI and API for Expo
 
 **Terminal 2 - Expo App:**
+
 ```bash
 pnpm dev:expo
 ```
+
 - Opens Expo DevTools
 - Press `i` for iOS Simulator
 - Press `a` for Android Emulator
 - Scan QR code for physical device
 
 Or start both at once:
+
 ```bash
 pnpm dev
 ```
@@ -73,19 +81,23 @@ pnpm dev
 ## 5. Verify Setup
 
 ### Web App
+
 1. Visit http://localhost:5173
 2. You should see the welcome screen
 3. API endpoint available at http://localhost:5173/api/users
 
 ### Expo App
+
 1. Open in simulator/device
 2. You should see the Expo welcome screen
 3. App connects to web API automatically
 
 ### Type Checking
+
 ```bash
 pnpm type-check
 ```
+
 Should complete with no errors.
 
 ## 6. Next Steps
@@ -99,26 +111,31 @@ Should complete with no errors.
 ## Troubleshooting
 
 ### Port Already in Use
+
 If port 5173 is in use, the web app will try the next available port. Update `EXPO_PUBLIC_API_URL` accordingly.
 
 ### Expo Can't Connect to API
+
 - Ensure web app is running (Terminal 1)
 - For physical devices, use local IP instead of localhost
 - Check firewall settings
 
 ### Metro Bundler Issues
+
 ```bash
 cd apps/expo
 pnpm dev --clear
 ```
 
 ### Dependency Issues
+
 ```bash
 rm -rf node_modules
 pnpm install
 ```
 
 ### TypeScript Errors
+
 ```bash
 pnpm type-check
 ```
@@ -126,18 +143,21 @@ pnpm type-check
 ## What Was Created?
 
 ### Apps
+
 - ✅ React Router 7 web app with Vite
 - ✅ Expo mobile app with Expo Router
 - ✅ Example API endpoint (`/api/users`)
 - ✅ Example pages for both platforms
 
 ### Shared Packages
+
 - ✅ `@monorepo/ui` - Component library (Button, Card, primitives)
 - ✅ `@monorepo/core` - API client, hooks (useData, useAuth), utilities
 - ✅ `@monorepo/types` - Shared TypeScript types
 - ✅ `@monorepo/config-*` - ESLint, TypeScript, Prettier configs
 
 ### Configuration
+
 - ✅ pnpm workspace setup
 - ✅ TypeScript strict mode
 - ✅ ESLint + Prettier

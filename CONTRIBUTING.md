@@ -3,6 +3,7 @@
 ## Getting Started
 
 1. **Install dependencies:**
+
    ```bash
    pnpm install
    ```
@@ -38,6 +39,7 @@ pnpm format
 ### Adding Dependencies
 
 #### To workspace packages:
+
 ```bash
 # Add to UI package
 pnpm --filter @monorepo/ui add package-name
@@ -50,6 +52,7 @@ pnpm add -D -w package-name
 ```
 
 #### To apps:
+
 ```bash
 # Add to web app
 pnpm --filter @monorepo/web add package-name
@@ -61,10 +64,12 @@ pnpm --filter @monorepo/expo add package-name
 ## Project Structure
 
 ### Apps
+
 - `apps/web/` - React Router 7 web application
 - `apps/expo/` - Expo React Native mobile application
 
 ### Shared Packages
+
 - `packages/ui/` - Cross-platform UI component library
 - `packages/core/` - Business logic, API client, hooks
 - `packages/types/` - Shared TypeScript types
@@ -120,11 +125,13 @@ export * from './components/YourComponent';
 ## When to Create Platform-Specific Files
 
 ### Create `.native.tsx` when:
+
 - Using platform-specific APIs (DOM vs React Native)
 - Different component structures needed
 - Performance optimizations required
 
 ### Share single `.tsx` when:
+
 - Using shared primitives (`View`, `Text` from `@monorepo/ui`)
 - Pure logic components
 - Simple layout components
@@ -162,6 +169,7 @@ Use Tailwind classes that work on both platforms:
 ### Platform Differences
 
 Some Tailwind features work differently:
+
 - **Hover states:** Limited support on native
 - **Gradients:** Use different approaches per platform
 - **Shadows:** Different implementations (shadow vs elevation)
@@ -169,6 +177,7 @@ Some Tailwind features work differently:
 ## Testing Locally
 
 ### Web App
+
 ```bash
 cd apps/web
 pnpm dev
@@ -176,6 +185,7 @@ pnpm dev
 ```
 
 ### Expo App
+
 ```bash
 cd apps/expo
 pnpm dev
@@ -183,6 +193,7 @@ pnpm dev
 ```
 
 For physical devices, update the API URL:
+
 ```bash
 # apps/expo/.env
 EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:5173
@@ -191,14 +202,17 @@ EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:5173
 ## Common Issues
 
 ### Metro can't find workspace packages
+
 - Check `apps/expo/metro.config.js` watchFolders configuration
 - Try clearing Metro cache: `pnpm dev:expo --clear`
 
 ### Type errors in NativeWind
+
 - Ensure `nativewind-env.d.ts` exists
 - Check `tsconfig.json` includes `"types": ["nativewind/types"]`
 
 ### Dependency conflicts
+
 - Run `pnpm install` at root to sync all workspaces
 - Check for version mismatches in package.json files
 

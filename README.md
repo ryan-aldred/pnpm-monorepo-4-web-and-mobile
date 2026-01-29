@@ -51,6 +51,7 @@ pnpm --filter @monorepo/core build
 ### 3. Start Development Servers
 
 #### Start both apps simultaneously:
+
 ```bash
 pnpm dev
 ```
@@ -58,12 +59,14 @@ pnpm dev
 #### Or start them individually:
 
 **Web app** (React Router 7):
+
 ```bash
 pnpm dev:web
 # Runs on http://localhost:5173
 ```
 
 **Mobile app** (Expo):
+
 ```bash
 pnpm dev:expo
 # Opens Expo DevTools
@@ -75,12 +78,14 @@ pnpm dev:expo
 ### 4. Configure API URL for Expo
 
 For **simulators/emulators**, the default localhost URL works:
+
 ```bash
 # apps/expo/.env
 EXPO_PUBLIC_API_URL=http://localhost:5173
 ```
 
 For **physical devices**, use your computer's local IP:
+
 ```bash
 # Find your local IP:
 # macOS/Linux: ifconfig | grep "inet "
@@ -97,6 +102,7 @@ When working on the `@monorepo/core` package, you need to rebuild it for changes
 **Recommended workflow:**
 
 Option 1: Build on change (recommended)
+
 ```bash
 # In one terminal
 pnpm --filter @monorepo/core dev
@@ -106,12 +112,14 @@ pnpm dev:web
 ```
 
 Option 2: Manual rebuild after changes
+
 ```bash
 pnpm --filter @monorepo/core build
 # Then restart web dev server
 ```
 
 **Why is this needed?**
+
 - React Router 7 SSR loads workspace packages directly via Node.js ESM
 - Node.js ESM requires explicit `.js` extensions in imports
 - TypeScript doesn't transpile source files, so we build to `dist/` with proper extensions
@@ -119,6 +127,7 @@ pnpm --filter @monorepo/core build
 - Tree-shaking and individual imports still work perfectly
 
 **What gets built:**
+
 - Source: `packages/core/src/**/*.ts`
 - Output: `packages/core/dist/**/*.js` + `.d.ts` + `.js.map`
 - You keep full TypeScript autocomplete and type checking
@@ -198,10 +207,12 @@ Metro (Expo) automatically picks `.native.tsx`, Vite (web) picks `.tsx`.
 ### API Communication
 
 **Web app** (React Router 7):
+
 - Uses loaders and actions directly (no HTTP)
 - Accesses database or services directly
 
 **Expo app**:
+
 - Makes HTTP requests to React Router 7 API
 - Uses shared `apiClient` from `@monorepo/core`
 
@@ -363,6 +374,7 @@ it('displays validation errors from action', () => {
 ### Expo Testing
 
 The Expo app uses Jest for testing. Currently supports:
+
 - ✅ Unit testing for business logic and utilities
 - ✅ Testing custom hooks
 - ✅ Jest mocking capabilities
@@ -451,6 +463,7 @@ pnpm add -D -w eslint
 ### Metro can't find workspace packages
 
 Ensure `apps/expo/metro.config.js` has correct monorepo root path:
+
 ```js
 const monorepoRoot = path.resolve(projectRoot, '../..');
 config.watchFolders = [monorepoRoot];
@@ -471,6 +484,7 @@ Some Tailwind features work differently on native. Use platform-specific files f
 ### "Cannot find module" errors in web app SSR
 
 If you see errors like `Cannot find module '/packages/core/src/data/users'`:
+
 1. Make sure you've built the core package: `pnpm --filter @monorepo/core build`
 2. For active development, run the build in watch mode: `pnpm --filter @monorepo/core dev`
 3. Check that `packages/core/dist/` exists and contains `.js` files
@@ -479,11 +493,13 @@ If you see errors like `Cannot find module '/packages/core/src/data/users'`:
 ### Tests not running or failing
 
 **Web tests (Vitest):**
+
 - Check `vitest.config.ts` path aliases match your tsconfig
 - Run `pnpm install` to ensure all test dependencies are installed
 - Clear test cache: `rm -rf apps/web/node_modules/.vitest`
 
 **Expo tests (Jest):**
+
 - For React Native component testing issues, refer to [TESTING.md](./TESTING.md)
 - Jest transform errors: check `jest.config.js` `transformIgnorePatterns`
 - Module not found errors: verify `moduleNameMapper` paths are correct
