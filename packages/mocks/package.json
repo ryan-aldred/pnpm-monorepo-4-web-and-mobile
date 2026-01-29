@@ -1,0 +1,38 @@
+{
+  "name": "@monorepo/mocks",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.mts",
+      "import": "./dist/browser.mjs"
+    },
+    "./native": {
+      "types": "./dist/native.d.mts",
+      "import": "./dist/native.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf node_modules dist"
+  },
+  "dependencies": {
+    "@monorepo/types": "workspace:*",
+    "msw": "^2.7.0"
+  },
+  "devDependencies": {
+    "@monorepo/config-eslint": "workspace:*",
+    "@monorepo/config-typescript": "workspace:*",
+    "tsdown": "^0.17.3",
+    "typescript": "^5.6.0"
+  }
+}
