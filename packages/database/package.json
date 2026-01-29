@@ -24,13 +24,14 @@
     "clean": "rm -rf node_modules dist migrations"
   },
   "dependencies": {
-    "drizzle-orm": "^0.38.0"
+    "better-auth": "^1.4.18",
+    "drizzle-orm": "^0.45.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",
     "@monorepo/config-eslint": "workspace:*",
     "@monorepo/config-typescript": "workspace:*",
-    "drizzle-kit": "^0.30.0",
+    "drizzle-kit": "^0.31.8",
     "tsdown": "^0.17.3",
     "typescript": "^5.6.0"
   }

@@ -12,6 +12,7 @@ module.exports = function (api) {
             '@monorepo/ui': '../../packages/ui/src',
             '@monorepo/core': '../../packages/core/src',
             '@monorepo/types': '../../packages/types/src',
+            'better-auth/react': 'better-auth/react',
           },
         },
       ],

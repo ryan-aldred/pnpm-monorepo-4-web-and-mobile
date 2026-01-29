@@ -11,11 +11,14 @@ binding = "ASSETS"
 binding = "DB"
 database_name = "monorepo-db"
 database_id = "8f9ac383-dcbf-4764-a092-d4bb48573567"
+migrations_dir = "../../packages/database/migrations"
 
 [vars]
 ENVIRONMENT = "development"
+AUTH_URL = "http://localhost:5173"
 
 [env.production]
 name = "monorepo-web-prod"
 [env.production.vars]
 ENVIRONMENT = "production"
+AUTH_URL = "https://your-production-domain.com"
