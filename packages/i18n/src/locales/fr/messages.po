@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Language: fr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#~ msgid "Already have an account?"
+#~ msgstr "Vous avez deja un compte?"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Confirmer le mot de passe"
+
+#~ msgid "Delete"
+#~ msgstr "Supprimer"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "Vous n'avez pas de compte?"
+
+#~ msgid "Edit"
+#~ msgstr "Modifier"
+
+#~ msgid "Email"
+#~ msgstr "Email"
+
+#~ msgid "Forgot Password?"
+#~ msgstr "Mot de passe oublie?"
+
+#~ msgid "Home"
+#~ msgstr "Accueil"
+
+#~ msgid "Invalid email or password"
+#~ msgstr "Email ou mot de passe invalide"
+
+#. Common labels
+#~ msgid "Language"
+#~ msgstr "Langue"
+
+#~ msgid "Loading..."
+#~ msgstr "Chargement..."
+
+#~ msgid "Network error. Please check your connection."
+#~ msgstr "Erreur reseau. Veuillez verifier votre connexion."
+
+#~ msgid "Password"
+#~ msgstr "Mot de passe"
+
+#~ msgid "Passwords do not match"
+#~ msgstr "Les mots de passe ne correspondent pas"
+
+#~ msgid "Please enter a valid email address"
+#~ msgstr "Veuillez entrer une adresse email valide"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Reset Password"
+#~ msgstr "Reinitialiser le mot de passe"
+
+#~ msgid "Retry"
+#~ msgstr "Reessayer"
+
+#. Common actions
+#~ msgid "Save"
+#~ msgstr "Enregistrer"
+
+#~ msgid "Server error. Please try again later."
+#~ msgstr "Erreur serveur. Veuillez reessayer plus tard."
+
+#~ msgid "Settings"
+#~ msgstr "Parametres"
+
+#. Common authentication messages
+#~ msgid "Sign In"
+#~ msgstr "Se Connecter"
+
+#~ msgid "Sign Out"
+#~ msgstr "Se Deconnecter"
+
+#~ msgid "Sign Up"
+#~ msgstr "S'inscrire"
+
+#. Error messages
+#~ msgid "Something went wrong. Please try again."
+#~ msgstr "Une erreur s'est produite. Veuillez reessayer."
+
+#~ msgid "Submit"
+#~ msgstr "Soumettre"
+
+#~ msgid "The requested resource was not found."
+#~ msgstr "La ressource demandee n'a pas ete trouvee."
+
+#. Validation messages
+#~ msgid "This field is required"
+#~ msgstr "Ce champ est obligatoire"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
+
+#~ msgid "You are not authorized to perform this action."
+#~ msgstr "Vous n'etes pas autorise a effectuer cette action."

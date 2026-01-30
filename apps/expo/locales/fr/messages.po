@@ -1,0 +1,128 @@
+msgid ""
+msgstr ""
+"Language: fr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: lib/components/Header.tsx:26
+#: lib/components/Header.tsx:44
+msgid "settings.language"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: lib/components/HeaderLanguageButton.tsx:15
+#: lib/components/HeaderLanguageButton.tsx:28
+msgid "Language"
+msgstr ""
+
+#~ msgid "action.chooseFromLibrary"
+#~ msgstr "Choisir dans la Galerie"
+
+#~ msgid "action.comment"
+#~ msgstr "Commenter"
+
+#~ msgid "action.like"
+#~ msgstr "J'aime"
+
+#~ msgid "action.openSettings"
+#~ msgstr "Ouvrir les Parametres"
+
+#. Mobile-specific actions
+#~ msgid "action.share"
+#~ msgstr "Partager"
+
+#~ msgid "action.takePicture"
+#~ msgstr "Prendre une Photo"
+
+#~ msgid "alert.camera.message"
+#~ msgstr "Cette application a besoin de l'acces a la camera pour prendre des photos"
+
+#. Mobile-specific alerts
+#~ msgid "alert.camera.title"
+#~ msgstr "Acces a la Camera"
+
+#~ msgid "alert.location.message"
+#~ msgstr "Cette application a besoin de l'acces a la localisation pour cette fonctionnalite"
+
+#~ msgid "alert.location.title"
+#~ msgstr "Acces a la Localisation"
+
+#~ msgid "alert.notification.message"
+#~ msgstr "Restez informe avec les notifications push"
+
+#~ msgid "alert.notification.title"
+#~ msgstr "Activer les Notifications"
+
+#~ msgid "nav.feed"
+#~ msgstr "Fil"
+
+#. Mobile-specific navigation
+#~ msgid "nav.home"
+#~ msgstr "Accueil"
+
+#~ msgid "nav.more"
+#~ msgstr "Plus"
+
+#~ msgid "nav.notifications"
+#~ msgstr "Notifications"
+
+#~ msgid "nav.profile"
+#~ msgstr "Profil"
+
+#~ msgid "screen.feed.empty"
+#~ msgstr "Aucune publication"
+
+#~ msgid "screen.feed.pullToRefresh"
+#~ msgstr "Tirez pour actualiser"
+
+#~ msgid "screen.feed.title"
+#~ msgstr "Fil"
+
+#. Mobile-specific screens
+#~ msgid "screen.home.title"
+#~ msgstr "Accueil"
+
+#~ msgid "screen.home.welcome"
+#~ msgstr "Bienvenue, {name}!"
+
+#~ msgid "screen.notifications.empty"
+#~ msgstr "Aucune notification"
+
+#~ msgid "screen.notifications.markAllRead"
+#~ msgstr "Tout marquer comme lu"
+
+#~ msgid "screen.notifications.title"
+#~ msgstr "Notifications"
+
+#~ msgid "screen.profile.editPhoto"
+#~ msgstr "Modifier la Photo"
+
+#~ msgid "screen.profile.title"
+#~ msgstr "Profil"
+
+#~ msgid "settings.about"
+#~ msgstr "A propos"
+
+#~ msgid "settings.appearance"
+#~ msgstr "Apparence"
+
+#~ msgid "settings.language"
+#~ msgstr "Langue"
+
+#. Mobile-specific settings
+#~ msgid "settings.notifications"
+#~ msgstr "Notifications"
+
+#~ msgid "settings.privacy"
+#~ msgstr "Confidentialite"
+
+#~ msgid "settings.version"
+#~ msgstr "Version {version}"

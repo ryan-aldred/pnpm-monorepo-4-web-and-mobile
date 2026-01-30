@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#~ msgid "Already have an account?"
+#~ msgstr "Already have an account?"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancel"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Confirm Password"
+
+#~ msgid "Delete"
+#~ msgstr "Delete"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "Don't have an account?"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "Email"
+#~ msgstr "Email"
+
+#~ msgid "Forgot Password?"
+#~ msgstr "Forgot Password?"
+
+#~ msgid "Home"
+#~ msgstr "Home"
+
+#~ msgid "Invalid email or password"
+#~ msgstr "Invalid email or password"
+
+#. Common labels
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#~ msgid "Loading..."
+#~ msgstr "Loading..."
+
+#~ msgid "Network error. Please check your connection."
+#~ msgstr "Network error. Please check your connection."
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Passwords do not match"
+#~ msgstr "Passwords do not match"
+
+#~ msgid "Please enter a valid email address"
+#~ msgstr "Please enter a valid email address"
+
+#~ msgid "Profile"
+#~ msgstr "Profile"
+
+#~ msgid "Reset Password"
+#~ msgstr "Reset Password"
+
+#~ msgid "Retry"
+#~ msgstr "Retry"
+
+#. Common actions
+#~ msgid "Save"
+#~ msgstr "Save"
+
+#~ msgid "Server error. Please try again later."
+#~ msgstr "Server error. Please try again later."
+
+#~ msgid "Settings"
+#~ msgstr "Settings"
+
+#. Common authentication messages
+#~ msgid "Sign In"
+#~ msgstr "Sign In"
+
+#~ msgid "Sign Out"
+#~ msgstr "Sign Out"
+
+#~ msgid "Sign Up"
+#~ msgstr "Sign Up"
+
+#. Error messages
+#~ msgid "Something went wrong. Please try again."
+#~ msgstr "Something went wrong. Please try again."
+
+#~ msgid "Submit"
+#~ msgstr "Submit"
+
+#~ msgid "The requested resource was not found."
+#~ msgstr "The requested resource was not found."
+
+#. Validation messages
+#~ msgid "This field is required"
+#~ msgstr "This field is required"
+
+#~ msgid "Users"
+#~ msgstr "Users"
+
+#~ msgid "You are not authorized to perform this action."
+#~ msgstr "You are not authorized to perform this action."

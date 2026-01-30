@@ -23,9 +23,14 @@
     "db:migrate:local": "pnpm --filter @monorepo/web d1:migrate:local",
     "db:migrate:remote": "pnpm --filter @monorepo/web d1:migrate:remote",
     "wrangler": "pnpm --filter @monorepo/web exec wrangler",
-    "deploy:web": "pnpm --filter @monorepo/web deploy"
+    "deploy:web": "pnpm --filter @monorepo/web deploy",
+    "i18n:extract": "pnpm --filter @monorepo/i18n lingui:extract && pnpm --filter @monorepo/web lingui:extract && pnpm --filter @monorepo/expo lingui:extract",
+    "i18n:compile": "npx tsx scripts/compile-i18n.ts",
+    "i18n:translate": "npx tsx scripts/translate-i18n.ts",
+    "i18n:sync": "pnpm i18n:extract && pnpm i18n:translate && pnpm i18n:compile"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
     "@monorepo/config-eslint": "workspace:*",
     "@monorepo/config-prettier": "workspace:*",
     "@monorepo/config-typescript": "workspace:*",

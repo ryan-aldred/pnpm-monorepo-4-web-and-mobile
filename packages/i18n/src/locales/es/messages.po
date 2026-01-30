@@ -1,0 +1,110 @@
+msgid ""
+msgstr ""
+"Language: es\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#~ msgid "Already have an account?"
+#~ msgstr "Ya tiene una cuenta?"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Confirmar Contrasena"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "Don't have an account?"
+#~ msgstr "No tiene una cuenta?"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "Email"
+#~ msgstr "Correo Electronico"
+
+#~ msgid "Forgot Password?"
+#~ msgstr "Olvido su contrasena?"
+
+#~ msgid "Home"
+#~ msgstr "Inicio"
+
+#~ msgid "Invalid email or password"
+#~ msgstr "Correo electronico o contrasena invalidos"
+
+#. Common labels
+#~ msgid "Language"
+#~ msgstr "Idioma"
+
+#~ msgid "Loading..."
+#~ msgstr "Cargando..."
+
+#~ msgid "Network error. Please check your connection."
+#~ msgstr "Error de red. Por favor verifique su conexion."
+
+#~ msgid "Password"
+#~ msgstr "Contrasena"
+
+#~ msgid "Passwords do not match"
+#~ msgstr "Las contrasenas no coinciden"
+
+#~ msgid "Please enter a valid email address"
+#~ msgstr "Por favor ingrese un correo electronico valido"
+
+#~ msgid "Profile"
+#~ msgstr "Perfil"
+
+#~ msgid "Reset Password"
+#~ msgstr "Restablecer Contrasena"
+
+#~ msgid "Retry"
+#~ msgstr "Reintentar"
+
+#. Common actions
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Server error. Please try again later."
+#~ msgstr "Error del servidor. Por favor intente mas tarde."
+
+#~ msgid "Settings"
+#~ msgstr "Configuracion"
+
+#. Common authentication messages
+#~ msgid "Sign In"
+#~ msgstr "Iniciar Sesion"
+
+#~ msgid "Sign Out"
+#~ msgstr "Cerrar Sesion"
+
+#~ msgid "Sign Up"
+#~ msgstr "Registrarse"
+
+#. Error messages
+#~ msgid "Something went wrong. Please try again."
+#~ msgstr "Algo salio mal. Por favor intente de nuevo."
+
+#~ msgid "Submit"
+#~ msgstr "Enviar"
+
+#~ msgid "The requested resource was not found."
+#~ msgstr "El recurso solicitado no fue encontrado."
+
+#. Validation messages
+#~ msgid "This field is required"
+#~ msgstr "Este campo es obligatorio"
+
+#~ msgid "Users"
+#~ msgstr "Usuarios"
+
+#~ msgid "You are not authorized to perform this action."
+#~ msgstr "No esta autorizado para realizar esta accion."
