@@ -3,6 +3,7 @@ import { ServerRouter } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
 import { createDatabase } from '@monorepo/database';
+import { I18nProvider, getServerI18n, getLocaleFromRequest } from '~/i18n';
 
 export default async function handleRequest(
   request: Request,
@@ -12,8 +13,13 @@ export default async function handleRequest(
   _loadContext: AppLoadContext
 ) {
   const userAgent = request.headers.get('user-agent');
+  const i18n = getServerI18n(request);
+  const locale = getLocaleFromRequest(request);
+
   const body = await renderToReadableStream(
-    <ServerRouter context={routerContext} url={request.url} />,
+    <I18nProvider i18n={i18n}>
+      <ServerRouter context={routerContext} url={request.url} />
+    </I18nProvider>,
     {
       signal: request.signal,
       onError(error: unknown) {
@@ -28,6 +34,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
+  responseHeaders.set('Content-Language', locale);
 
   return new Response(body, {
     headers: responseHeaders,

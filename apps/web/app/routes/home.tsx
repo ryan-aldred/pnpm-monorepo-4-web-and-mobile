@@ -28,7 +28,7 @@ export default function Home() {
   // const { greeting, users, luke, r2, c3po, vader } =
   const { greeting, users } = useLoaderData<typeof loader>();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Welcome to the Monorepo!

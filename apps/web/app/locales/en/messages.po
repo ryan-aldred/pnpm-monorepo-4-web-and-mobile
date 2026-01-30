@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: app/components/Header.tsx:9
+msgid "Home"
+msgstr "Home"
+
+#. js-lingui-explicit-id
+#: app/components/Header.tsx:10
+msgid "Users"
+msgstr "Users"
+
+#. js-lingui-explicit-id
+#: app/components/Header.tsx:18
+msgid "Welcome"
+msgstr "Welcome"
+
+#~ msgid "Active"
+#~ msgstr "Active"
+
+#~ msgid "Add User"
+#~ msgstr "Add User"
+
+#~ msgid "Admin"
+#~ msgstr "Admin"
+
+#~ msgid "All"
+#~ msgstr "All"
+
+#. Footer
+#~ msgid "All rights reserved."
+#~ msgstr "All rights reserved."
+
+#~ msgid "Are you sure you want to delete this user?"
+#~ msgstr "Are you sure you want to delete this user?"
+
+#. Web-specific modals
+#~ msgid "Confirm Action"
+#~ msgstr "Confirm Action"
+
+#. Web-specific navigation
+#~ msgid "Dashboard"
+#~ msgstr "Dashboard"
+
+#~ msgid "Edit User"
+#~ msgstr "Edit User"
+
+#~ msgid "Inactive"
+#~ msgstr "Inactive"
+
+#~ msgid "Next"
+#~ msgstr "Next"
+
+#~ msgid "Previous"
+#~ msgstr "Previous"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Privacy Policy"
+
+#~ msgid "Reports"
+#~ msgstr "Reports"
+
+#. Web-specific forms
+#~ msgid "Search..."
+#~ msgstr "Search..."
+
+#~ msgid "Terms of Service"
+#~ msgstr "Terms of Service"
+
+#~ msgid "This action cannot be undone."
+#~ msgstr "This action cannot be undone."
+
+#. Web-specific pages
+#~ msgid "User Management"
+#~ msgstr "User Management"

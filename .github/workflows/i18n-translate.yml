@@ -1,0 +1,98 @@
+name: AI Translate i18n
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/app/**/*.ts"
+      - "apps/web/app/**/*.tsx"
+      - "packages/i18n/src/**/*.ts"
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Extract translation strings
+        run: pnpm i18n:extract
+
+      - name: Check for new untranslated strings
+        id: check-strings
+        run: |
+          # Check if any .po files have untranslated strings (empty msgstr after non-empty msgid)
+          if grep -r 'msgstr ""' --include="*.po" apps/web/app/locales packages/i18n/src/locales 2>/dev/null | grep -v 'msgid ""' > /dev/null; then
+            echo "has_untranslated=true" >> $GITHUB_OUTPUT
+            echo "Found untranslated strings"
+          else
+            echo "has_untranslated=false" >> $GITHUB_OUTPUT
+            echo "All strings are translated"
+          fi
+
+      - name: AI Translate missing strings
+        if: steps.check-strings.outputs.has_untranslated == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npx tsx scripts/translate-i18n.ts
+
+      - name: Compile translations
+        if: steps.check-strings.outputs.has_untranslated == 'true'
+        run: pnpm i18n:compile
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "i18n: AI-translated new strings"
+          title: "i18n: New translations"
+          body: |
+            ## AI-Generated Translations
+
+            This PR contains AI-generated translations for new strings detected in the codebase.
+
+            **Please review the translations before merging.**
+
+            ### Changes
+            - Extracted new translation strings from source code
+            - Translated missing strings using Claude AI
+            - Compiled translations to runtime format
+
+            ### Checklist
+            - [ ] Review translations for accuracy
+            - [ ] Check for context-specific translations that may need adjustment
+            - [ ] Verify placeholders are preserved correctly
+          branch: i18n/ai-translations
+          delete-branch: true
+          labels: |
+            i18n
+            automated

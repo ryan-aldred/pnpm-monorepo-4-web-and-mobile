@@ -1,0 +1,128 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: lib/components/Header.tsx:26
+#: lib/components/Header.tsx:44
+msgid "settings.language"
+msgstr "settings.language"
+
+#. js-lingui-explicit-id
+#: lib/components/HeaderLanguageButton.tsx:15
+#: lib/components/HeaderLanguageButton.tsx:28
+msgid "Language"
+msgstr "Language"
+
+#~ msgid "action.chooseFromLibrary"
+#~ msgstr "Choose from Library"
+
+#~ msgid "action.comment"
+#~ msgstr "Comment"
+
+#~ msgid "action.like"
+#~ msgstr "Like"
+
+#~ msgid "action.openSettings"
+#~ msgstr "Open Settings"
+
+#. Mobile-specific actions
+#~ msgid "action.share"
+#~ msgstr "Share"
+
+#~ msgid "action.takePicture"
+#~ msgstr "Take Picture"
+
+#~ msgid "alert.camera.message"
+#~ msgstr "This app needs camera access to take photos"
+
+#. Mobile-specific alerts
+#~ msgid "alert.camera.title"
+#~ msgstr "Camera Access"
+
+#~ msgid "alert.location.message"
+#~ msgstr "This app needs location access for this feature"
+
+#~ msgid "alert.location.title"
+#~ msgstr "Location Access"
+
+#~ msgid "alert.notification.message"
+#~ msgstr "Stay updated with push notifications"
+
+#~ msgid "alert.notification.title"
+#~ msgstr "Enable Notifications"
+
+#~ msgid "nav.feed"
+#~ msgstr "Feed"
+
+#. Mobile-specific navigation
+#~ msgid "nav.home"
+#~ msgstr "Home"
+
+#~ msgid "nav.more"
+#~ msgstr "More"
+
+#~ msgid "nav.notifications"
+#~ msgstr "Notifications"
+
+#~ msgid "nav.profile"
+#~ msgstr "Profile"
+
+#~ msgid "screen.feed.empty"
+#~ msgstr "No posts yet"
+
+#~ msgid "screen.feed.pullToRefresh"
+#~ msgstr "Pull to refresh"
+
+#~ msgid "screen.feed.title"
+#~ msgstr "Feed"
+
+#. Mobile-specific screens
+#~ msgid "screen.home.title"
+#~ msgstr "Home"
+
+#~ msgid "screen.home.welcome"
+#~ msgstr "Welcome, {name}!"
+
+#~ msgid "screen.notifications.empty"
+#~ msgstr "No notifications"
+
+#~ msgid "screen.notifications.markAllRead"
+#~ msgstr "Mark all as read"
+
+#~ msgid "screen.notifications.title"
+#~ msgstr "Notifications"
+
+#~ msgid "screen.profile.editPhoto"
+#~ msgstr "Edit Photo"
+
+#~ msgid "screen.profile.title"
+#~ msgstr "Profile"
+
+#~ msgid "settings.about"
+#~ msgstr "About"
+
+#~ msgid "settings.appearance"
+#~ msgstr "Appearance"
+
+#~ msgid "settings.language"
+#~ msgstr "Language"
+
+#. Mobile-specific settings
+#~ msgid "settings.notifications"
+#~ msgstr "Notifications"
+
+#~ msgid "settings.privacy"
+#~ msgstr "Privacy"
+
+#~ msgid "settings.version"
+#~ msgstr "Version {version}"

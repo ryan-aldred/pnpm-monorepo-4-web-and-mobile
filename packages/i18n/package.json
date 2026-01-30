@@ -1,0 +1,56 @@
+{
+  "name": "@monorepo/i18n",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./locales/en/messages.mjs": {
+      "types": "./src/locales/en/messages.d.mts",
+      "import": "./src/locales/en/messages.mjs"
+    },
+    "./locales/es/messages.mjs": {
+      "types": "./src/locales/es/messages.d.mts",
+      "import": "./src/locales/es/messages.mjs"
+    },
+    "./locales/fr/messages.mjs": {
+      "types": "./src/locales/fr/messages.d.mts",
+      "import": "./src/locales/fr/messages.mjs"
+    },
+    "./locales/en/messages.js": {
+      "types": "./src/locales/en/messages.d.ts",
+      "require": "./src/locales/en/messages.js"
+    },
+    "./locales/es/messages.js": {
+      "types": "./src/locales/es/messages.d.ts",
+      "require": "./src/locales/es/messages.js"
+    },
+    "./locales/fr/messages.js": {
+      "types": "./src/locales/fr/messages.d.ts",
+      "require": "./src/locales/fr/messages.js"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf node_modules dist",
+    "lingui:extract": "lingui extract",
+    "lingui:compile": "lingui compile && lingui compile --namespace es"
+  },
+  "dependencies": {
+    "@lingui/core": "^5.2.0"
+  },
+  "devDependencies": {
+    "@lingui/cli": "^5.2.0",
+    "@monorepo/config-eslint": "workspace:*",
+    "@monorepo/config-typescript": "workspace:*",
+    "tsdown": "^0.17.3",
+    "typescript": "^5.6.0"
+  }
+}

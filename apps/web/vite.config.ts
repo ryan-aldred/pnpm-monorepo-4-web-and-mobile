@@ -1,4 +1,8 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { reactRouter } from '@react-router/dev/vite';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { cloudflareDevProxy } from '@react-router/dev/vite/cloudflare';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
@@ -37,15 +41,21 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '~': '/app',
-      '@monorepo/ui': '../../packages/ui/src',
-      '@monorepo/types': '../../packages/types/src',
-      '@monorepo/database': '../../packages/database/src/index.ts',
+      '~': path.resolve(__dirname, 'app'),
+      '@monorepo/ui': path.resolve(__dirname, '../../packages/ui/src'),
+      '@monorepo/types': path.resolve(__dirname, '../../packages/types/src'),
+      '@monorepo/database': path.resolve(__dirname, '../../packages/database/src/index.ts'),
+      '@monorepo/i18n/locales': path.resolve(__dirname, '../../packages/i18n/src/locales'),
+      '@monorepo/i18n': path.resolve(__dirname, '../../packages/i18n/src/index.ts'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    dedupe: ['react', 'react-dom', '@lingui/react', '@lingui/core'],
+  },
+  optimizeDeps: {
+    exclude: ['@lingui/react'],
   },
   ssr: {
-    noExternal: ['@monorepo/types', '@monorepo/ui', '@monorepo/database'],
+    noExternal: ['@monorepo/types', '@monorepo/ui', '@monorepo/database', '@monorepo/i18n', '@lingui/core', '@lingui/react'],
     target: 'webworker',
   },
 });

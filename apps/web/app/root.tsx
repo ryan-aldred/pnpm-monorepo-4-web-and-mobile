@@ -1,6 +1,14 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
-import type { LinksFunction } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
+import type { LinksFunction, LoaderFunctionArgs } from 'react-router';
+import { I18nProvider, getI18nInstance, getLocaleFromRequest, DEFAULT_LOCALE, type SupportedLocale } from '~/i18n';
+import { Header } from '~/components/Header';
 import './tailwind.css';
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = getLocaleFromRequest(request);
+  console.log("Root loader - detected locale:", locale, "Cookie:", request.headers.get("Cookie"));
+  return { locale };
+}
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -16,8 +24,19 @@ export const links: LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  // Use DEFAULT_LOCALE as fallback for error pages where loader doesn't run
+  let locale: SupportedLocale = DEFAULT_LOCALE;
+  try {
+    const data = useLoaderData<typeof loader>();
+    if (data?.locale) {
+      locale = data.locale;
+    }
+  } catch {
+    // Loader didn't run (error boundary, etc.)
+  }
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,5 +53,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { locale } = useLoaderData<typeof loader>();
+
+  // Get i18n instance - creates fresh on server, uses singleton on client
+  const i18n = getI18nInstance(locale);
+
+  return (
+    <I18nProvider i18n={i18n}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </I18nProvider>
+  );
 }
