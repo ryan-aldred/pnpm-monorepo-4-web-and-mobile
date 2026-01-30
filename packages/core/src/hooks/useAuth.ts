@@ -1,25 +1,50 @@
 import { create } from 'zustand';
 
-interface AuthState {
-  user: { id: number; name: string; email: string } | null;
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  image?: string | null;
 }
 
-// Example auth store using Zustand
-export const useAuth = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: async (email: string, _password: string) => {
-    // In a real app, this would call the API
-    // For now, just simulate a login
-    set({
-      user: { id: 1, name: 'Demo User', email },
-      isAuthenticated: true,
-    });
-  },
-  logout: () => {
-    set({ user: null, isAuthenticated: false });
-  },
+export interface AuthSession {
+  user: AuthUser;
+  session: {
+    id: string;
+    userId: string;
+    expiresAt: Date;
+  };
+}
+
+interface AuthState {
+  session: AuthSession | null;
+  isLoading: boolean;
+  error: string | null;
+  setSession: (session: AuthSession | null) => void;
+  setLoading: (isLoading: boolean) => void;
+  setError: (error: string | null) => void;
+  clear: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+  session: null,
+  isLoading: true,
+  error: null,
+  setSession: (session) => set({ session, isLoading: false, error: null }),
+  setLoading: (isLoading) => set({ isLoading }),
+  setError: (error) => set({ error, isLoading: false }),
+  clear: () => set({ session: null, isLoading: false, error: null }),
 }));
+
+export function useAuth() {
+  const { session, isLoading, error } = useAuthStore();
+
+  return {
+    user: session?.user ?? null,
+    session: session?.session ?? null,
+    isAuthenticated: !!session,
+    isLoading,
+    error,
+  };
+}

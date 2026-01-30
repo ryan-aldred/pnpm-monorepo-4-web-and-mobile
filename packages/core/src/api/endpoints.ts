@@ -10,8 +10,10 @@ export const ENDPOINTS = {
   USERS: '/api/users',
   POSTS: '/api/posts',
   AUTH: {
-    LOGIN: '/api/auth/login',
-    LOGOUT: '/api/auth/logout',
-    REFRESH: '/api/auth/refresh',
+    BASE: '/api/auth',
+    SIGN_IN: '/api/auth/sign-in/email',
+    SIGN_UP: '/api/auth/sign-up/email',
+    SIGN_OUT: '/api/auth/sign-out',
+    SESSION: '/api/auth/get-session',
   },
 } as const;
