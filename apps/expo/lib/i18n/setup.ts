@@ -1,13 +1,13 @@
 // Polyfills for React Native
-import "@formatjs/intl-locale/polyfill";
-import "@formatjs/intl-pluralrules/polyfill";
-import "@formatjs/intl-pluralrules/locale-data/en";
-import "@formatjs/intl-pluralrules/locale-data/es";
-import "@formatjs/intl-pluralrules/locale-data/fr";
+import '@formatjs/intl-locale/polyfill';
+import '@formatjs/intl-pluralrules/polyfill';
+import '@formatjs/intl-pluralrules/locale-data/en';
+import '@formatjs/intl-pluralrules/locale-data/es';
+import '@formatjs/intl-pluralrules/locale-data/fr';
 
-import { type I18n, type Messages } from "@lingui/core";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Localization from "expo-localization";
+import { type I18n, type Messages } from '@lingui/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Localization from 'expo-localization';
 import {
   createI18nInstance,
   activateLocale,
@@ -15,18 +15,18 @@ import {
   isSupportedLocale,
   DEFAULT_LOCALE,
   type SupportedLocale,
-} from "@monorepo/i18n";
+} from '@monorepo/i18n';
 
 // Static imports for all language bundles
 // Common translations from packages/i18n
-import { messages as commonEn } from "@monorepo/i18n/locales/en/messages";
-import { messages as commonEs } from "@monorepo/i18n/locales/es/messages";
-import { messages as commonFr } from "@monorepo/i18n/locales/fr/messages";
+import { messages as commonEn } from '@monorepo/i18n/locales/en/messages';
+import { messages as commonEs } from '@monorepo/i18n/locales/es/messages';
+import { messages as commonFr } from '@monorepo/i18n/locales/fr/messages';
 
 // Mobile-specific translations
-import { messages as mobileEn } from "../../locales/en/messages";
-import { messages as mobileEs } from "../../locales/es/messages";
-import { messages as mobileFr } from "../../locales/fr/messages";
+import { messages as mobileEn } from '../../locales/en/messages';
+import { messages as mobileEs } from '../../locales/es/messages';
+import { messages as mobileFr } from '../../locales/fr/messages';
 
 // Pre-merged message catalogs for each locale
 const allMessages: Record<SupportedLocale, Messages> = {
@@ -35,7 +35,7 @@ const allMessages: Record<SupportedLocale, Messages> = {
   fr: mergeMessages(commonFr, mobileFr),
 };
 
-const LOCALE_STORAGE_KEY = "@app/locale";
+const LOCALE_STORAGE_KEY = '@app/locale';
 
 // Singleton i18n instance
 let i18nInstance: I18n | null = null;
@@ -59,7 +59,10 @@ export function detectDeviceLocale(): SupportedLocale {
   const deviceLocales = Localization.getLocales();
   const primaryLocale = deviceLocales[0];
 
-  if (primaryLocale?.languageCode && isSupportedLocale(primaryLocale.languageCode)) {
+  if (
+    primaryLocale?.languageCode &&
+    isSupportedLocale(primaryLocale.languageCode)
+  ) {
     return primaryLocale.languageCode;
   }
 
@@ -105,7 +108,7 @@ export async function changeLocale(locale: SupportedLocale): Promise<void> {
   try {
     await AsyncStorage.setItem(LOCALE_STORAGE_KEY, locale);
   } catch (error) {
-    console.warn("Failed to persist locale:", error);
+    console.warn('Failed to persist locale:', error);
   }
 }
 

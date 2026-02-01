@@ -1,9 +1,9 @@
-import { setupI18n, type I18n, type Messages } from "@lingui/core";
+import { setupI18n, type I18n, type Messages } from '@lingui/core';
 import {
   DEFAULT_LOCALE,
   isSupportedLocale,
   type SupportedLocale,
-} from "./types";
+} from './types';
 
 /**
  * Creates a new i18n instance for isolated usage (e.g., SSR per-request)
@@ -25,11 +25,11 @@ export function detectLocaleFromHeader(
 
   // Parse Accept-Language header (e.g., "en-US,en;q=0.9,es;q=0.8")
   const languages = acceptLanguage
-    .split(",")
+    .split(',')
     .map((lang) => {
-      const [code, qValue] = lang.trim().split(";q=");
+      const [code, qValue] = lang.trim().split(';q=');
       return {
-        code: code?.split("-")[0]?.toLowerCase() ?? "",
+        code: code?.split('-')[0]?.toLowerCase() ?? '',
         q: qValue ? parseFloat(qValue) : 1,
       };
     })

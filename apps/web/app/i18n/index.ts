@@ -1,4 +1,4 @@
-export { I18nProvider, useI18n, useLingui } from "./provider";
+export { I18nProvider, useI18n, useLingui } from './provider';
 export {
   getI18nInstance,
   getServerI18n,
@@ -9,4 +9,4 @@ export {
   getMessages,
   DEFAULT_LOCALE,
   type SupportedLocale,
-} from "./setup";
+} from './setup';

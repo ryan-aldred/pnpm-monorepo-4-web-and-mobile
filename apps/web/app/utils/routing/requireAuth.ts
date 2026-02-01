@@ -1,8 +1,14 @@
-import { redirect, type LoaderFunctionArgs, type ActionFunctionArgs } from 'react-router';
+import {
+  redirect,
+  type LoaderFunctionArgs,
+  type ActionFunctionArgs,
+} from 'react-router';
 import { createAuth } from '~/lib/auth.server';
 import { createDatabase } from '@monorepo/database';
 
-export async function requireAuth(args: LoaderFunctionArgs | ActionFunctionArgs) {
+export async function requireAuth(
+  args: LoaderFunctionArgs | ActionFunctionArgs
+) {
   const { cloudflare } = args.context;
   const db = createDatabase(cloudflare.env.DB);
   const auth = createAuth(db, {

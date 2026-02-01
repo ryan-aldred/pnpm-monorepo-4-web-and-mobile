@@ -1,13 +1,31 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from 'react-router';
 import type { LinksFunction, LoaderFunctionArgs } from 'react-router';
-import { I18nProvider, getI18nInstance, getLocaleFromRequest, DEFAULT_LOCALE, type SupportedLocale } from '~/i18n';
+import {
+  I18nProvider,
+  getI18nInstance,
+  getLocaleFromRequest,
+  DEFAULT_LOCALE,
+  type SupportedLocale,
+} from '~/i18n';
 import { ThemeProvider } from '~/theme';
 import { Header } from '~/components/Header';
 import './tailwind.css';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = getLocaleFromRequest(request);
-  console.log("Root loader - detected locale:", locale, "Cookie:", request.headers.get("Cookie"));
+  console.log(
+    'Root loader - detected locale:',
+    locale,
+    'Cookie:',
+    request.headers.get('Cookie')
+  );
   return { locale };
 }
 

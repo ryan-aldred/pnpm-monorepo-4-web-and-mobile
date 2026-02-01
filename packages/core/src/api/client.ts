@@ -5,7 +5,10 @@ class ApiClient {
   private getBaseUrl: () => string;
 
   constructor(baseUrl?: string | (() => string)) {
-    this.getBaseUrl = typeof baseUrl === 'function' ? baseUrl : () => baseUrl ?? getApiBaseUrl();
+    this.getBaseUrl =
+      typeof baseUrl === 'function'
+        ? baseUrl
+        : () => baseUrl ?? getApiBaseUrl();
   }
 
   async request<T>(

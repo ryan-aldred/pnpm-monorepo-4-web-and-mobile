@@ -1,4 +1,4 @@
-export { I18nProvider } from "./provider";
+export { I18nProvider } from './provider';
 export {
   getI18n,
   initializeI18n,
@@ -7,4 +7,4 @@ export {
   detectDeviceLocale,
   DEFAULT_LOCALE,
   type SupportedLocale,
-} from "./setup";
+} from './setup';

@@ -6,7 +6,13 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Alert, AlertDescription } from '~/components/ui/alert';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '~/components/ui/card';
 
 export const meta: MetaFunction = () => {
   return [
@@ -95,7 +101,10 @@ export default function Login() {
         <CardFooter className="justify-center">
           <p className="text-sm text-gray-500">
             {"Don't have an account? "}
-            <Link to="/register" className="text-primary hover:underline font-medium">
+            <Link
+              to="/register"
+              className="text-primary hover:underline font-medium"
+            >
               Register
             </Link>
           </p>

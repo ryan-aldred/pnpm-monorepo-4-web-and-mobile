@@ -57,7 +57,9 @@ function AppContent() {
               fontWeight: 'bold',
             },
             headerRight: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <View
+                style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
+              >
                 <ThemeToggle />
                 <HeaderAuthButton />
                 <HeaderLanguageButton />

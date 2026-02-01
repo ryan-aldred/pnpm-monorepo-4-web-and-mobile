@@ -1,23 +1,23 @@
-import { useLingui } from "~/i18n/provider";
+import { useLingui } from '~/i18n/provider';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
+} from '~/components/ui/select';
 
-type SupportedLocale = "en" | "es" | "fr";
+type SupportedLocale = 'en' | 'es' | 'fr';
 
 const LOCALES: { value: SupportedLocale; label: string }[] = [
-  { value: "en", label: "English" },
-  { value: "es", label: "Espanol" },
-  { value: "fr", label: "Francais" },
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Espanol' },
+  { value: 'fr', label: 'Francais' },
 ];
 
 export function LanguageSwitcher() {
   const { i18n } = useLingui();
-  const currentLocale = i18n.locale || "en";
+  const currentLocale = i18n.locale || 'en';
 
   const handleChange = (newLocale: string) => {
     // Set cookie to persist the locale

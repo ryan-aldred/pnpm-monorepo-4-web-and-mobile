@@ -20,30 +20,30 @@ pnpm --filter @monorepo/database db:generate
 
 ## Available Root Scripts
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Run all apps (core, web, expo) |
-| `pnpm dev:web` | Run web app with dependencies |
-| `pnpm dev:expo` | Run expo app with dependencies |
-| `pnpm build` | Build all packages and apps |
-| `pnpm build:web` | Build web app |
-| `pnpm build:expo` | Build expo app |
-| `pnpm build:packages` | Build all packages |
-| `pnpm test` | Run all tests |
-| `pnpm test:web` | Run web tests |
-| `pnpm test:expo` | Run expo tests |
-| `pnpm lint` | Lint all packages |
-| `pnpm type-check` | Type check all packages |
-| `pnpm db:generate` | Generate Drizzle migrations |
-| `pnpm db:migrate:local` | Apply migrations to local D1 |
-| `pnpm db:migrate:remote` | Apply migrations to remote D1 |
-| `pnpm db:studio` | Open Drizzle Studio |
-| `pnpm wrangler <args>` | Run wrangler commands |
-| `pnpm deploy:web` | Deploy web app to Cloudflare |
-| `pnpm i18n:extract` | Extract new strings from code to .po files |
-| `pnpm i18n:translate` | AI translate missing strings (needs ANTHROPIC_API_KEY) |
-| `pnpm i18n:compile` | Compile .po files to runtime .mjs format |
-| `pnpm i18n:sync` | Extract + translate + compile in sequence |
+| Command                  | Description                                            |
+| ------------------------ | ------------------------------------------------------ |
+| `pnpm dev`               | Run all apps (core, web, expo)                         |
+| `pnpm dev:web`           | Run web app with dependencies                          |
+| `pnpm dev:expo`          | Run expo app with dependencies                         |
+| `pnpm build`             | Build all packages and apps                            |
+| `pnpm build:web`         | Build web app                                          |
+| `pnpm build:expo`        | Build expo app                                         |
+| `pnpm build:packages`    | Build all packages                                     |
+| `pnpm test`              | Run all tests                                          |
+| `pnpm test:web`          | Run web tests                                          |
+| `pnpm test:expo`         | Run expo tests                                         |
+| `pnpm lint`              | Lint all packages                                      |
+| `pnpm type-check`        | Type check all packages                                |
+| `pnpm db:generate`       | Generate Drizzle migrations                            |
+| `pnpm db:migrate:local`  | Apply migrations to local D1                           |
+| `pnpm db:migrate:remote` | Apply migrations to remote D1                          |
+| `pnpm db:studio`         | Open Drizzle Studio                                    |
+| `pnpm wrangler <args>`   | Run wrangler commands                                  |
+| `pnpm deploy:web`        | Deploy web app to Cloudflare                           |
+| `pnpm i18n:extract`      | Extract new strings from code to .po files             |
+| `pnpm i18n:translate`    | AI translate missing strings (needs ANTHROPIC_API_KEY) |
+| `pnpm i18n:compile`      | Compile .po files to runtime .mjs format               |
+| `pnpm i18n:sync`         | Extract + translate + compile in sequence              |
 
 ## Project Structure
 
@@ -91,21 +91,33 @@ Uses **shadcn/ui** components built on Radix UI primitives with Tailwind CSS. Co
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from '~/components/ui/card';
 import { Alert, AlertDescription } from '~/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select';
 ```
 
 #### Available shadcn Components
 
-| Component | File | Purpose |
-|-----------|------|---------|
-| `Button` | `button.tsx` | Buttons with variants (default, destructive, outline, secondary, ghost, link) |
-| `Input` | `input.tsx` | Text inputs |
-| `Label` | `label.tsx` | Form labels |
-| `Card` | `card.tsx` | Card container with Header, Title, Description, Content, Footer |
-| `Alert` | `alert.tsx` | Alert messages with variants (default, destructive) |
-| `Select` | `select.tsx` | Dropdown select built on Radix UI |
+| Component | File         | Purpose                                                                       |
+| --------- | ------------ | ----------------------------------------------------------------------------- |
+| `Button`  | `button.tsx` | Buttons with variants (default, destructive, outline, secondary, ghost, link) |
+| `Input`   | `input.tsx`  | Text inputs                                                                   |
+| `Label`   | `label.tsx`  | Form labels                                                                   |
+| `Card`    | `card.tsx`   | Card container with Header, Title, Description, Content, Footer               |
+| `Alert`   | `alert.tsx`  | Alert messages with variants (default, destructive)                           |
+| `Select`  | `select.tsx` | Dropdown select built on Radix UI                                             |
 
 #### Adding New shadcn Components
 
@@ -121,7 +133,7 @@ The `cn()` utility combines `clsx` and `tailwind-merge` for conditional class na
 ```tsx
 import { cn } from '~/lib/utils';
 
-<div className={cn("base-class", isActive && "active-class", className)} />
+<div className={cn('base-class', isActive && 'active-class', className)} />;
 ```
 
 ### Guidelines for New Features
@@ -138,12 +150,13 @@ Both apps support light/dark mode with system preference detection and user togg
 
 ### Architecture
 
-| App | Provider | Persistence | Hook |
-|-----|----------|-------------|------|
-| Web | `~/theme` (`ThemeProvider`) | `localStorage` | `useTheme()` |
+| App  | Provider                      | Persistence    | Hook         |
+| ---- | ----------------------------- | -------------- | ------------ |
+| Web  | `~/theme` (`ThemeProvider`)   | `localStorage` | `useTheme()` |
 | Expo | `lib/theme` (`ThemeProvider`) | `AsyncStorage` | `useTheme()` |
 
 The `useTheme()` hook returns:
+
 - `theme`: Current setting (`'light'` | `'dark'` | `'system'`)
 - `resolvedTheme`: Actual theme being displayed (`'light'` | `'dark'`)
 - `setTheme(theme)`: Function to change theme
@@ -169,19 +182,19 @@ The `useTheme()` hook returns:
 
 #### Available Semantic Classes
 
-| Class | Light Mode | Dark Mode | Use For |
-|-------|------------|-----------|---------|
-| `bg-background` | White | Dark gray | Page/section backgrounds |
-| `text-foreground` | Near black | Near white | Primary text |
-| `text-muted-foreground` | Gray | Light gray | Secondary text |
-| `bg-card` | White | Dark gray | Card backgrounds |
-| `border-border` | Light gray | Dark gray | Borders |
-| `bg-accent` | Light gray | Dark gray | Hover states |
-| `text-accent-foreground` | Near black | Near white | Text on accent bg |
-| `bg-primary` | Blue | Blue | Primary buttons |
-| `text-primary-foreground` | White | Dark | Text on primary bg |
-| `bg-destructive` | Red | Dark red | Destructive actions |
-| `bg-popover` | White | Dark gray | Dropdowns, modals |
+| Class                     | Light Mode | Dark Mode  | Use For                  |
+| ------------------------- | ---------- | ---------- | ------------------------ |
+| `bg-background`           | White      | Dark gray  | Page/section backgrounds |
+| `text-foreground`         | Near black | Near white | Primary text             |
+| `text-muted-foreground`   | Gray       | Light gray | Secondary text           |
+| `bg-card`                 | White      | Dark gray  | Card backgrounds         |
+| `border-border`           | Light gray | Dark gray  | Borders                  |
+| `bg-accent`               | Light gray | Dark gray  | Hover states             |
+| `text-accent-foreground`  | Near black | Near white | Text on accent bg        |
+| `bg-primary`              | Blue       | Blue       | Primary buttons          |
+| `text-primary-foreground` | White      | Dark       | Text on primary bg       |
+| `bg-destructive`          | Red        | Dark red   | Destructive actions      |
+| `bg-popover`              | White      | Dark gray  | Dropdowns, modals        |
 
 ### Expo App - Gluestack colorMode
 
@@ -231,11 +244,11 @@ Custom I18nProvider (React Context in apps/web/app/i18n/provider.tsx)
 
 ### Translation Files
 
-| Location | Purpose |
-|----------|---------|
+| Location                                         | Purpose                                     |
+| ------------------------------------------------ | ------------------------------------------- |
 | `packages/i18n/src/locales/{locale}/messages.po` | Common translations (auth, errors, actions) |
-| `apps/web/app/locales/{locale}/messages.po` | Web-specific translations |
-| `apps/expo/locales/{locale}/messages.po` | Mobile-specific translations |
+| `apps/web/app/locales/{locale}/messages.po`      | Web-specific translations                   |
+| `apps/expo/locales/{locale}/messages.po`         | Mobile-specific translations                |
 
 ### Adding New Translations
 
@@ -253,6 +266,7 @@ Custom I18nProvider (React Context in apps/web/app/i18n/provider.tsx)
 ### GitHub Automation
 
 The `.github/workflows/i18n-translate.yml` workflow automatically:
+
 1. Extracts new strings on push to main
 2. AI translates missing strings using Claude
 3. Creates a PR for review

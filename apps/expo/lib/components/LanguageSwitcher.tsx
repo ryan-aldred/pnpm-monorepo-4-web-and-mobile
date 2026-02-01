@@ -1,11 +1,5 @@
 import { useState, useCallback } from 'react';
-import {
-  VStack,
-  HStack,
-  Text,
-  Pressable,
-  Box,
-} from '@gluestack-ui/themed';
+import { VStack, HStack, Text, Pressable, Box } from '@gluestack-ui/themed';
 import { useLingui } from '@lingui/react';
 import { SUPPORTED_LOCALES, type SupportedLocale } from '@monorepo/i18n';
 import { changeLocale, getCurrentLocale } from '../i18n';
@@ -22,9 +16,8 @@ interface LanguageSwitcherProps {
 
 export function LanguageSwitcher({ onLocaleChange }: LanguageSwitcherProps) {
   const { i18n } = useLingui();
-  const [selectedLocale, setSelectedLocale] = useState<SupportedLocale>(
-    getCurrentLocale()
-  );
+  const [selectedLocale, setSelectedLocale] =
+    useState<SupportedLocale>(getCurrentLocale());
 
   const handleLocaleSelect = useCallback(
     async (locale: SupportedLocale) => {
@@ -48,18 +41,26 @@ export function LanguageSwitcher({ onLocaleChange }: LanguageSwitcherProps) {
           <Box
             bg={selectedLocale === locale ? '$primary50' : '$white'}
             borderWidth={1}
-            borderColor={selectedLocale === locale ? '$primary300' : '$borderLight200'}
+            borderColor={
+              selectedLocale === locale ? '$primary300' : '$borderLight200'
+            }
             borderTopLeftRadius={index === 0 ? '$lg' : '$none'}
             borderTopRightRadius={index === 0 ? '$lg' : '$none'}
-            borderBottomLeftRadius={index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'}
-            borderBottomRightRadius={index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'}
+            borderBottomLeftRadius={
+              index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'
+            }
+            borderBottomRightRadius={
+              index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'
+            }
             borderTopWidth={index === 0 ? 1 : 0}
             px="$4"
             py="$3.5"
           >
             <HStack justifyContent="space-between" alignItems="center">
               <Text
-                color={selectedLocale === locale ? '$primary600' : '$textDark700'}
+                color={
+                  selectedLocale === locale ? '$primary600' : '$textDark700'
+                }
                 fontWeight={selectedLocale === locale ? '$semibold' : '$normal'}
                 fontSize="$md"
               >
