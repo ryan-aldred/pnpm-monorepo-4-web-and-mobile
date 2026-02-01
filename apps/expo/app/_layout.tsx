@@ -5,8 +5,10 @@ import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
 import { useSession } from '../lib/auth-client';
 import { I18nProvider } from '../lib/i18n';
+import { ThemeProvider, useTheme } from '../lib/theme';
 import { HeaderLanguageButton } from '../lib/components/HeaderLanguageButton';
 import { HeaderAuthButton } from '../lib/components/HeaderAuthButton';
+import { ThemeToggle } from '../lib/components/ThemeToggle';
 import '../global.css';
 
 // Initialize mocks before the app renders
@@ -37,34 +39,18 @@ function useProtectedRoute() {
   }, [session, segments, isPending, router]);
 }
 
-export default function RootLayout() {
-  const [isReady, setIsReady] = useState(
-    !__DEV__ || process.env.EXPO_PUBLIC_USE_MOCKS !== 'true'
-  );
+function AppContent() {
+  const { resolvedTheme, isDark } = useTheme();
 
   useProtectedRoute();
 
-  useEffect(() => {
-    if (!isReady) {
-      initMocks().then(() => setIsReady(true));
-    }
-  }, [isReady]);
-
-  if (!isReady) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Starting mock server...</Text>
-      </View>
-    );
-  }
-
   return (
-    <GluestackUIProvider config={config}>
+    <GluestackUIProvider config={config} colorMode={resolvedTheme}>
       <I18nProvider>
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#f4511e',
+              backgroundColor: isDark ? '#1a1a2e' : '#f4511e',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -72,6 +58,7 @@ export default function RootLayout() {
             },
             headerRight: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <ThemeToggle />
                 <HeaderAuthButton />
                 <HeaderLanguageButton />
               </View>
@@ -93,5 +80,31 @@ export default function RootLayout() {
         </Stack>
       </I18nProvider>
     </GluestackUIProvider>
+  );
+}
+
+export default function RootLayout() {
+  const [isReady, setIsReady] = useState(
+    !__DEV__ || process.env.EXPO_PUBLIC_USE_MOCKS !== 'true'
+  );
+
+  useEffect(() => {
+    if (!isReady) {
+      initMocks().then(() => setIsReady(true));
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Starting mock server...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

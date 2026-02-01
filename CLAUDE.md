@@ -132,6 +132,89 @@ import { cn } from '~/lib/utils';
 4. **Expo styling**: Use Gluestack's token-based props (`bg="$primary500"`, `p="$4"`)
 5. **Web styling**: Use Tailwind CSS classes and shadcn variants
 
+## Light/Dark Mode (Theming)
+
+Both apps support light/dark mode with system preference detection and user toggle.
+
+### Architecture
+
+| App | Provider | Persistence | Hook |
+|-----|----------|-------------|------|
+| Web | `~/theme` (`ThemeProvider`) | `localStorage` | `useTheme()` |
+| Expo | `lib/theme` (`ThemeProvider`) | `AsyncStorage` | `useTheme()` |
+
+The `useTheme()` hook returns:
+- `theme`: Current setting (`'light'` | `'dark'` | `'system'`)
+- `resolvedTheme`: Actual theme being displayed (`'light'` | `'dark'`)
+- `setTheme(theme)`: Function to change theme
+- `isDark`: Boolean (Expo only)
+
+### Web App - Tailwind Semantic Classes
+
+**IMPORTANT**: Always use semantic Tailwind classes instead of hardcoded colors. This ensures automatic dark mode support.
+
+```tsx
+// CORRECT - uses CSS variables that adapt to theme
+<div className="bg-background text-foreground" />
+<div className="border-border" />
+<div className="text-muted-foreground" />
+<div className="hover:bg-accent hover:text-accent-foreground" />
+
+// WRONG - hardcoded colors don't adapt to dark mode
+<div className="bg-white text-gray-900" />
+<div className="border-gray-200" />
+<div className="text-gray-600" />
+<div className="hover:bg-gray-100" />
+```
+
+#### Available Semantic Classes
+
+| Class | Light Mode | Dark Mode | Use For |
+|-------|------------|-----------|---------|
+| `bg-background` | White | Dark gray | Page/section backgrounds |
+| `text-foreground` | Near black | Near white | Primary text |
+| `text-muted-foreground` | Gray | Light gray | Secondary text |
+| `bg-card` | White | Dark gray | Card backgrounds |
+| `border-border` | Light gray | Dark gray | Borders |
+| `bg-accent` | Light gray | Dark gray | Hover states |
+| `text-accent-foreground` | Near black | Near white | Text on accent bg |
+| `bg-primary` | Blue | Blue | Primary buttons |
+| `text-primary-foreground` | White | Dark | Text on primary bg |
+| `bg-destructive` | Red | Dark red | Destructive actions |
+| `bg-popover` | White | Dark gray | Dropdowns, modals |
+
+### Expo App - Gluestack colorMode
+
+The `GluestackUIProvider` receives `colorMode` from the theme context. Gluestack components automatically adapt.
+
+For custom styling, use Gluestack's theme-aware tokens or the `useTheme()` hook:
+
+```tsx
+import { useTheme } from '../lib/theme';
+
+function MyComponent() {
+  const { isDark } = useTheme();
+
+  return (
+    <Box bg={isDark ? '$backgroundDark900' : '$backgroundLight0'}>
+      {/* content */}
+    </Box>
+  );
+}
+```
+
+### Adding Theme Toggle to New Screens
+
+The theme toggle is already in the header for both apps. If you need to add it elsewhere:
+
+```tsx
+// Web
+import { ThemeToggle } from '~/components/ThemeToggle';
+
+// Expo
+import { ThemeToggle } from '../lib/components/ThemeToggle';
+```
+
 ## Internationalization (i18n)
 
 ### Architecture

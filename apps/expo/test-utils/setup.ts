@@ -6,6 +6,15 @@ jest.mock('react-native', () => ({
   TouchableOpacity: 'TouchableOpacity',
   Platform: { OS: 'ios', select: jest.fn((obj) => obj.ios) },
   StyleSheet: { create: jest.fn((styles) => styles) },
+  useColorScheme: jest.fn(() => 'light'),
+}));
+
+// Mock AsyncStorage
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(() => Promise.resolve(null)),
+  setItem: jest.fn(() => Promise.resolve()),
+  removeItem: jest.fn(() => Promise.resolve()),
+  clear: jest.fn(() => Promise.resolve()),
 }));
 
 import '@testing-library/jest-native/extend-expect';
