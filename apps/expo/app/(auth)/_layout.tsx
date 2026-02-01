@@ -1,16 +1,28 @@
+import { View } from 'react-native';
 import { Stack } from 'expo-router';
+import { useTheme } from '../../lib/theme';
+import { ThemeToggle } from '../../lib/components/ThemeToggle';
+import { HeaderLanguageButton } from '../../lib/components/HeaderLanguageButton';
 
 export default function AuthLayout() {
+  const { isDark } = useTheme();
+
   return (
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#2563eb',
+          backgroundColor: isDark ? '#1a1a2e' : '#f4511e',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        headerRight: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <ThemeToggle />
+            <HeaderLanguageButton />
+          </View>
+        ),
       }}
     >
       <Stack.Screen
