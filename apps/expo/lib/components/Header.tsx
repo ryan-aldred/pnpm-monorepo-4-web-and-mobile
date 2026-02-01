@@ -1,8 +1,22 @@
-import { useState } from "react";
-import { View, Text, Pressable, Modal, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useLingui } from "@lingui/react";
-import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useState } from 'react';
+import {
+  Box,
+  HStack,
+  Text,
+  Pressable,
+  Modal,
+  ModalBackdrop,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  Heading,
+  Icon,
+  CloseIcon,
+} from '@gluestack-ui/themed';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useLingui } from '@lingui/react';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface HeaderProps {
   title?: string;
@@ -16,98 +30,53 @@ export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
 
   return (
     <>
-      <View style={[styles.header, { paddingTop: insets.top }]}>
-        <View style={styles.headerContent}>
-          <Text style={styles.title}>{title || "Monorepo"}</Text>
+      <Box bg="$primary600" pt={insets.top}>
+        <HStack
+          px="$4"
+          py="$3"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Text color="$white" fontSize="$xl" fontWeight="$bold">
+            {title || 'Monorepo'}
+          </Text>
           {showLanguageSwitcher && (
             <Pressable
               onPress={() => setLanguageModalVisible(true)}
-              style={styles.languageButton}
-              accessibilityLabel={i18n._("settings.language")}
+              bg="$white"
+              opacity={0.9}
+              px="$3"
+              py="$1.5"
+              borderRadius="$full"
+              accessibilityLabel={i18n._('Language')}
             >
-              <Text style={styles.languageButtonText}>
+              <Text color="$primary600" fontWeight="$semibold" fontSize="$sm">
                 {i18n.locale.toUpperCase()}
               </Text>
             </Pressable>
           )}
-        </View>
-      </View>
+        </HStack>
+      </Box>
 
       <Modal
-        visible={languageModalVisible}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setLanguageModalVisible(false)}
+        isOpen={languageModalVisible}
+        onClose={() => setLanguageModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>{i18n._("settings.language")}</Text>
-            <Pressable
-              onPress={() => setLanguageModalVisible(false)}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeButtonText}>Done</Text>
-            </Pressable>
-          </View>
-          <LanguageSwitcher
-            onLocaleChange={() => setLanguageModalVisible(false)}
-          />
-        </View>
+        <ModalBackdrop />
+        <ModalContent maxWidth="$96" mx="$4">
+          <ModalHeader borderBottomWidth={1} borderColor="$borderLight200">
+            <Heading size="md">{i18n._('Language')}</Heading>
+            <ModalCloseButton>
+              <Icon as={CloseIcon} size="md" />
+            </ModalCloseButton>
+          </ModalHeader>
+          <ModalBody py="$4">
+            <LanguageSwitcher
+              onLocaleChange={() => setLanguageModalVisible(false)}
+            />
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#f4511e",
-  },
-  headerContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  languageButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  languageButtonText: {
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: 14,
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-  closeButton: {
-    padding: 8,
-  },
-  closeButtonText: {
-    color: "#0066cc",
-    fontSize: 16,
-    fontWeight: "500",
-  },
-});

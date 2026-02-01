@@ -1,10 +1,10 @@
 import { createAuthClient } from 'better-auth/react';
 import { expoClient } from '@better-auth/expo/client';
 import * as SecureStore from 'expo-secure-store';
-import { API_BASE_URL } from '@monorepo/core';
+import { getApiBaseUrl } from '@monorepo/core';
 
 export const authClient = createAuthClient({
-  baseURL: API_BASE_URL,
+  baseURL: getApiBaseUrl(),
   plugins: [
     expoClient({
       scheme: 'monorepo',

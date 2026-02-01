@@ -19,7 +19,10 @@ config.resolver.nodeModulesPaths = [
 // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
 config.resolver.disableHierarchicalLookup = true;
 
-// 4. Add support for NativeWind and other extensions
+// 4. Enable package.json exports field resolution (needed for better-auth/react)
+config.resolver.unstable_enablePackageExports = true;
+
+// 5. Add support for NativeWind and other extensions
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'mjs'];
 
 module.exports = config;

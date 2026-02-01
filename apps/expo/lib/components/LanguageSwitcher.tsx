@@ -1,13 +1,19 @@
-import { useState, useCallback } from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { useLingui } from "@lingui/react";
-import { SUPPORTED_LOCALES, type SupportedLocale } from "@monorepo/i18n";
-import { changeLocale, getCurrentLocale } from "../i18n";
+import { useState, useCallback } from 'react';
+import {
+  VStack,
+  HStack,
+  Text,
+  Pressable,
+  Box,
+} from '@gluestack-ui/themed';
+import { useLingui } from '@lingui/react';
+import { SUPPORTED_LOCALES, type SupportedLocale } from '@monorepo/i18n';
+import { changeLocale, getCurrentLocale } from '../i18n';
 
 const LOCALE_LABELS: Record<SupportedLocale, string> = {
-  en: "English",
-  es: "Espanol",
-  fr: "Francais",
+  en: 'English',
+  es: 'Español',
+  fr: 'Français',
 };
 
 interface LanguageSwitcherProps {
@@ -24,7 +30,6 @@ export function LanguageSwitcher({ onLocaleChange }: LanguageSwitcherProps) {
     async (locale: SupportedLocale) => {
       setSelectedLocale(locale);
       await changeLocale(locale);
-      // Force re-render by triggering i18n change
       i18n.activate(locale);
       onLocaleChange?.(locale);
     },
@@ -32,78 +37,43 @@ export function LanguageSwitcher({ onLocaleChange }: LanguageSwitcherProps) {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Language</Text>
-      <View style={styles.optionsContainer}>
-        {SUPPORTED_LOCALES.map((locale) => (
-          <Pressable
-            key={locale}
-            style={[
-              styles.option,
-              selectedLocale === locale && styles.optionSelected,
-            ]}
-            onPress={() => handleLocaleSelect(locale)}
-            accessibilityRole="button"
-            accessibilityLabel={`Select ${LOCALE_LABELS[locale]}`}
-            accessibilityState={{ selected: selectedLocale === locale }}
+    <VStack space="md">
+      {SUPPORTED_LOCALES.map((locale, index) => (
+        <Pressable
+          key={locale}
+          onPress={() => handleLocaleSelect(locale)}
+          accessibilityRole="button"
+          accessibilityLabel={`Select ${LOCALE_LABELS[locale]}`}
+        >
+          <Box
+            bg={selectedLocale === locale ? '$primary50' : '$white'}
+            borderWidth={1}
+            borderColor={selectedLocale === locale ? '$primary300' : '$borderLight200'}
+            borderTopLeftRadius={index === 0 ? '$lg' : '$none'}
+            borderTopRightRadius={index === 0 ? '$lg' : '$none'}
+            borderBottomLeftRadius={index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'}
+            borderBottomRightRadius={index === SUPPORTED_LOCALES.length - 1 ? '$lg' : '$none'}
+            borderTopWidth={index === 0 ? 1 : 0}
+            px="$4"
+            py="$3.5"
           >
-            <Text
-              style={[
-                styles.optionText,
-                selectedLocale === locale && styles.optionTextSelected,
-              ]}
-            >
-              {LOCALE_LABELS[locale]}
-            </Text>
-            {selectedLocale === locale && (
-              <Text style={styles.checkmark}>✓</Text>
-            )}
-          </Pressable>
-        ))}
-      </View>
-    </View>
+            <HStack justifyContent="space-between" alignItems="center">
+              <Text
+                color={selectedLocale === locale ? '$primary600' : '$textDark700'}
+                fontWeight={selectedLocale === locale ? '$semibold' : '$normal'}
+                fontSize="$md"
+              >
+                {LOCALE_LABELS[locale]}
+              </Text>
+              {selectedLocale === locale && (
+                <Text color="$primary600" fontWeight="$bold" fontSize="$md">
+                  ✓
+                </Text>
+              )}
+            </HStack>
+          </Box>
+        </Pressable>
+      ))}
+    </VStack>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 12,
-  },
-  optionsContainer: {
-    borderRadius: 8,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
-  },
-  option: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  optionSelected: {
-    backgroundColor: "#f0f7ff",
-  },
-  optionText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  optionTextSelected: {
-    color: "#0066cc",
-    fontWeight: "500",
-  },
-  checkmark: {
-    fontSize: 16,
-    color: "#0066cc",
-    fontWeight: "bold",
-  },
-});

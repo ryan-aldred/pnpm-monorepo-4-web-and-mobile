@@ -1,15 +1,26 @@
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Link, router } from 'expo-router';
+import {
+  Box,
+  VStack,
+  Heading,
+  Text,
+  FormControl,
+  FormControlLabel,
+  FormControlLabelText,
+  Input,
+  InputField,
+  Button,
+  ButtonText,
+  ButtonSpinner,
+  Alert,
+  AlertIcon,
+  AlertText,
+  HStack,
+  Pressable,
+} from '@gluestack-ui/themed';
+import { AlertCircle } from 'lucide-react-native';
 import { signUp } from '../../lib/auth-client';
 
 export default function Register() {
@@ -56,173 +67,122 @@ export default function Register() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={{ flex: 1, backgroundColor: '#f0f4f8' }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Register</Text>
+        <Box
+          bg="$white"
+          borderRadius="$2xl"
+          p="$6"
+          shadowColor="$black"
+          shadowOffset={{ width: 0, height: 2 }}
+          shadowOpacity={0.1}
+          shadowRadius={8}
+          elevation={4}
+        >
+          <VStack space="lg">
+            <Heading size="2xl" textAlign="center" color="$textDark900">
+              Register
+            </Heading>
 
-          {error ? (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{error}</Text>
-            </View>
-          ) : null}
+            {error ? (
+              <Alert action="error" variant="solid">
+                <AlertIcon as={AlertCircle} mr="$3" />
+                <AlertText>{error}</AlertText>
+              </Alert>
+            ) : null}
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Name</Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              placeholder="Your name"
-              autoCapitalize="words"
-            />
-          </View>
+            <FormControl>
+              <FormControlLabel>
+                <FormControlLabelText>Name</FormControlLabelText>
+              </FormControlLabel>
+              <Input>
+                <InputField
+                  value={name}
+                  onChangeText={setName}
+                  placeholder="Your name"
+                  autoCapitalize="words"
+                  textContentType="name"
+                />
+              </Input>
+            </FormControl>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
+            <FormControl>
+              <FormControlLabel>
+                <FormControlLabelText>Email</FormControlLabelText>
+              </FormControlLabel>
+              <Input>
+                <InputField
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="you@example.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="emailAddress"
+                />
+              </Input>
+            </FormControl>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="At least 8 characters"
-              secureTextEntry
-            />
-          </View>
+            <FormControl>
+              <FormControlLabel>
+                <FormControlLabelText>Password</FormControlLabelText>
+              </FormControlLabel>
+              <Input>
+                <InputField
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="At least 8 characters"
+                  secureTextEntry
+                  textContentType="none"
+                  autoComplete="off"
+                />
+              </Input>
+            </FormControl>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              style={styles.input}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholder="Confirm your password"
-              secureTextEntry
-            />
-          </View>
+            <FormControl>
+              <FormControlLabel>
+                <FormControlLabelText>Confirm Password</FormControlLabelText>
+              </FormControlLabel>
+              <Input>
+                <InputField
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  placeholder="Confirm your password"
+                  secureTextEntry
+                  textContentType="none"
+                  autoComplete="off"
+                />
+              </Input>
+            </FormControl>
 
-          <TouchableOpacity
-            style={[styles.button, isLoading && styles.buttonDisabled]}
-            onPress={handleRegister}
-            disabled={isLoading}
-          >
-            <Text style={styles.buttonText}>
-              {isLoading ? 'Creating account...' : 'Create Account'}
-            </Text>
-          </TouchableOpacity>
+            <Button
+              onPress={handleRegister}
+              isDisabled={isLoading}
+              size="lg"
+            >
+              {isLoading && <ButtonSpinner mr="$2" />}
+              <ButtonText>{isLoading ? 'Creating account...' : 'Create Account'}</ButtonText>
+            </Button>
 
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account? </Text>
-            <Link href={'/(auth)/login' as any} asChild>
-              <TouchableOpacity>
-                <Text style={styles.link}>Login</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
-        </View>
+            <HStack justifyContent="center" space="xs">
+              <Text color="$textLight500">Already have an account?</Text>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              <Link href={'/(auth)/login' as any} asChild>
+                <Pressable>
+                  <Text color="$primary500" fontWeight="$medium">
+                    Login
+                  </Text>
+                </Pressable>
+              </Link>
+            </HStack>
+          </VStack>
+        </Box>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f4f8',
-  },
-  scrollContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  formContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  errorContainer: {
-    backgroundColor: '#fee2e2',
-    borderColor: '#f87171',
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-  },
-  errorText: {
-    color: '#dc2626',
-    textAlign: 'center',
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#374151',
-    marginBottom: 4,
-  },
-  input: {
-    backgroundColor: '#f9fafb',
-    borderColor: '#d1d5db',
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#2563eb',
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonDisabled: {
-    backgroundColor: '#93c5fd',
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 24,
-  },
-  footerText: {
-    color: '#6b7280',
-  },
-  link: {
-    color: '#2563eb',
-    fontWeight: '500',
-  },
-});

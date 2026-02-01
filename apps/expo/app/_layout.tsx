@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { View, Text } from 'react-native';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { config } from '@gluestack-ui/config';
 import { useSession } from '../lib/auth-client';
 import { I18nProvider } from '../lib/i18n';
 import { HeaderLanguageButton } from '../lib/components/HeaderLanguageButton';
+import { HeaderAuthButton } from '../lib/components/HeaderAuthButton';
 import '../global.css';
 
 // Initialize mocks before the app renders
@@ -56,32 +59,39 @@ export default function RootLayout() {
   }
 
   return (
-    <I18nProvider>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerRight: () => <HeaderLanguageButton />,
-        }}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            title: 'Home',
+    <GluestackUIProvider config={config}>
+      <I18nProvider>
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerRight: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <HeaderAuthButton />
+                <HeaderLanguageButton />
+              </View>
+            ),
           }}
-        />
-        <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-    </I18nProvider>
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              title: 'Home',
+            }}
+          />
+          <Stack.Screen
+            name="(auth)"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+      </I18nProvider>
+    </GluestackUIProvider>
   );
 }

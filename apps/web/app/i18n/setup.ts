@@ -55,7 +55,7 @@ export function getI18nInstance(locale: SupportedLocale): I18n {
     clientLocale = locale;
     activateLocale(clientI18n, locale, allMessages[locale]);
   }
-  return clientI18n;
+  return clientI18n as I18n;
 }
 
 /**
@@ -121,7 +121,7 @@ export function getLocaleFromRequest(request: Request): SupportedLocale {
  * Gets messages for a specific locale
  */
 export function getMessages(locale: SupportedLocale): Messages {
-  return allMessages[locale];
+  return allMessages[locale] ?? allMessages[DEFAULT_LOCALE];
 }
 
 export { DEFAULT_LOCALE, type SupportedLocale };
