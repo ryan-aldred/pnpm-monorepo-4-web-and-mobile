@@ -22,8 +22,10 @@ import {
 } from '@gluestack-ui/themed';
 import { AlertCircle } from 'lucide-react-native';
 import { signIn } from '../../lib/auth-client';
+import { useTheme } from '../../lib/theme';
 
 export default function Login() {
+  const { isDark } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -53,7 +55,10 @@ export default function Login() {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#f0f4f8' }}
+      style={{
+        flex: 1,
+        backgroundColor: isDark ? '#1a1a2e' : '#f0f4f8',
+      }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
@@ -65,17 +70,21 @@ export default function Login() {
         keyboardShouldPersistTaps="handled"
       >
         <Box
-          bg="$white"
+          bg={isDark ? '$backgroundDark800' : '$white'}
           borderRadius="$2xl"
           p="$6"
           shadowColor="$black"
           shadowOffset={{ width: 0, height: 2 }}
-          shadowOpacity={0.1}
+          shadowOpacity={isDark ? 0.3 : 0.1}
           shadowRadius={8}
           elevation={4}
         >
           <VStack space="lg">
-            <Heading size="2xl" textAlign="center" color="$textDark900">
+            <Heading
+              size="2xl"
+              textAlign="center"
+              color={isDark ? '$textDark50' : '$textDark900'}
+            >
               Login
             </Heading>
 
@@ -124,7 +133,9 @@ export default function Login() {
             </Button>
 
             <HStack justifyContent="center" space="xs">
-              <Text color="$textLight500">{"Don't have an account?"}</Text>
+              <Text color={isDark ? '$textDark400' : '$textLight500'}>
+                {"Don't have an account?"}
+              </Text>
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               <Link href={'/(auth)/register' as any} asChild>
                 <Pressable>
