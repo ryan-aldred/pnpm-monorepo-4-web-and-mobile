@@ -45,8 +45,8 @@ function AppContent() {
   useProtectedRoute();
 
   return (
-    <GluestackUIProvider config={config} colorMode={resolvedTheme}>
-      <I18nProvider>
+    <I18nProvider>
+      <GluestackUIProvider config={config} colorMode={resolvedTheme}>
         <Stack
           screenOptions={{
             headerStyle: {
@@ -78,8 +78,8 @@ function AppContent() {
             }}
           />
         </Stack>
-      </I18nProvider>
-    </GluestackUIProvider>
+      </GluestackUIProvider>
+    </I18nProvider>
   );
 }
 
