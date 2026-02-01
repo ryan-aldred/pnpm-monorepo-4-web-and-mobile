@@ -28,6 +28,9 @@ function ssrExtensionResolver(): Plugin {
 }
 
 export default defineConfig({
+  server: {
+    host: true, // Listen on all network interfaces
+  },
   css: {
     postcss: {
       plugins: [tailwindcss, autoprefixer],

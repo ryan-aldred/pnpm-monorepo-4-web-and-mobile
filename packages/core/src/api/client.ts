@@ -1,11 +1,11 @@
-import { API_BASE_URL } from './endpoints';
+import { getApiBaseUrl } from './endpoints';
 import type { ApiResponse, ApiError } from '@monorepo/types';
 
 class ApiClient {
-  private baseUrl: string;
+  private getBaseUrl: () => string;
 
-  constructor(baseUrl: string = API_BASE_URL) {
-    this.baseUrl = baseUrl;
+  constructor(baseUrl?: string | (() => string)) {
+    this.getBaseUrl = typeof baseUrl === 'function' ? baseUrl : () => baseUrl ?? getApiBaseUrl();
   }
 
   async request<T>(
@@ -13,7 +13,7 @@ class ApiClient {
     options?: RequestInit
   ): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      const response = await fetch(`${this.getBaseUrl()}${endpoint}`, {
         ...options,
         headers: {
           'Content-Type': 'application/json',

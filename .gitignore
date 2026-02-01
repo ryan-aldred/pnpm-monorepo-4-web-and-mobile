@@ -37,6 +37,9 @@ web-build/
 # React Router
 .react-router/
 
+# Cloudflare
+.wrangler/
+
 # IDEs
 .vscode/
 .idea/

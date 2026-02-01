@@ -58,7 +58,7 @@ export default function Home() {
             <h2>
               {vader.name} - {vader.skin_color}
             </h2> */}
-            {users.map((user) => (
+            {users.map((user: { id: number; name: string; email: string }) => (
               <li key={user.id}>
                 {user.name} - {user.email}
               </li>
