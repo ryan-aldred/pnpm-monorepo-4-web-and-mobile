@@ -11,19 +11,19 @@
  *   OPENAI_API_KEY=sk-... npx tsx scripts/translate-i18n.ts --provider openai
  */
 
-import Anthropic from "@anthropic-ai/sdk";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import Anthropic from '@anthropic-ai/sdk';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = path.resolve(__dirname, "..");
+const ROOT_DIR = path.resolve(__dirname, '..');
 
 // Configuration
-const LOCALES_TO_TRANSLATE = ["es", "fr"]; // Don't translate source locale (en)
+const LOCALES_TO_TRANSLATE = ['es', 'fr']; // Don't translate source locale (en)
 const PO_FILE_PATHS = [
-  "apps/web/app/locales/{locale}/messages.po",
-  "packages/i18n/src/locales/{locale}/messages.po",
+  'apps/web/app/locales/{locale}/messages.po',
+  'packages/i18n/src/locales/{locale}/messages.po',
 ];
 
 interface POEntry {
@@ -41,14 +41,14 @@ interface POFile {
 
 // Language names for prompts
 const LANGUAGE_NAMES: Record<string, string> = {
-  es: "Spanish",
-  fr: "French",
-  de: "German",
-  it: "Italian",
-  pt: "Portuguese",
-  ja: "Japanese",
-  ko: "Korean",
-  zh: "Chinese (Simplified)",
+  es: 'Spanish',
+  fr: 'French',
+  de: 'German',
+  it: 'Italian',
+  pt: 'Portuguese',
+  ja: 'Japanese',
+  ko: 'Korean',
+  zh: 'Chinese (Simplified)',
 };
 
 /**
@@ -60,11 +60,11 @@ function parsePOFile(filePath: string): POFile | null {
     return null;
   }
 
-  const content = fs.readFileSync(filePath, "utf-8");
-  const lines = content.split("\n");
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const lines = content.split('\n');
 
   const entries: POEntry[] = [];
-  let header = "";
+  let header = '';
   let currentEntry: Partial<POEntry> | null = null;
   let inHeader = true;
 
@@ -72,18 +72,18 @@ function parsePOFile(filePath: string): POFile | null {
     const line = lines[i];
 
     // Header ends at first empty line after msgstr
-    if (inHeader && line === "" && header.includes("msgstr")) {
+    if (inHeader && line === '' && header.includes('msgstr')) {
       inHeader = false;
       continue;
     }
 
     if (inHeader) {
-      header += line + "\n";
+      header += line + '\n';
       continue;
     }
 
     // Skip empty lines between entries
-    if (line === "") {
+    if (line === '') {
       if (currentEntry?.msgid !== undefined) {
         entries.push(currentEntry as POEntry);
         currentEntry = null;
@@ -97,20 +97,20 @@ function parsePOFile(filePath: string): POFile | null {
     }
 
     // Comments
-    if (line.startsWith("#")) {
+    if (line.startsWith('#')) {
       currentEntry.comments = currentEntry.comments || [];
       currentEntry.comments.push(line);
       continue;
     }
 
     // msgid
-    if (line.startsWith("msgid ")) {
+    if (line.startsWith('msgid ')) {
       currentEntry.msgid = extractQuotedString(line.slice(6));
       continue;
     }
 
     // msgstr
-    if (line.startsWith("msgstr ")) {
+    if (line.startsWith('msgstr ')) {
       currentEntry.msgstr = extractQuotedString(line.slice(7));
       continue;
     }
@@ -141,10 +141,10 @@ function extractQuotedString(s: string): string {
   const match = s.match(/^"(.*)"$/);
   if (!match) return s;
   return match[1]
-    .replace(/\\n/g, "\n")
-    .replace(/\\t/g, "\t")
+    .replace(/\\n/g, '\n')
+    .replace(/\\t/g, '\t')
     .replace(/\\"/g, '"')
-    .replace(/\\\\/g, "\\");
+    .replace(/\\\\/g, '\\');
 }
 
 /**
@@ -154,10 +154,10 @@ function toPOString(s: string): string {
   return (
     '"' +
     s
-      .replace(/\\/g, "\\\\")
+      .replace(/\\/g, '\\\\')
       .replace(/"/g, '\\"')
-      .replace(/\n/g, "\\n")
-      .replace(/\t/g, "\\t") +
+      .replace(/\n/g, '\\n')
+      .replace(/\t/g, '\\t') +
     '"'
   );
 }
@@ -169,9 +169,9 @@ function writePOFile(poFile: POFile): void {
   let content = poFile.header;
 
   for (const entry of poFile.entries) {
-    content += "\n";
+    content += '\n';
     for (const comment of entry.comments) {
-      content += comment + "\n";
+      content += comment + '\n';
     }
     content += `msgid ${toPOString(entry.msgid)}\n`;
     content += `msgstr ${toPOString(entry.msgstr)}\n`;
@@ -189,7 +189,7 @@ async function translateWithClaude(
 ): Promise<string[]> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY environment variable is required");
+    throw new Error('ANTHROPIC_API_KEY environment variable is required');
   }
 
   const client = new Anthropic({ apiKey });
@@ -206,21 +206,21 @@ Rules:
 - Do not include numbering, quotes, or any other formatting
 
 Strings to translate:
-${strings.map((s, i) => `${i + 1}. ${s}`).join("\n")}
+${strings.map((s, i) => `${i + 1}. ${s}`).join('\n')}
 
 Translations (one per line, no numbers):`;
 
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: 'claude-sonnet-4-20250514',
     max_tokens: 4096,
-    messages: [{ role: "user", content: prompt }],
+    messages: [{ role: 'user', content: prompt }],
   });
 
   const text =
-    response.content[0].type === "text" ? response.content[0].text : "";
+    response.content[0].type === 'text' ? response.content[0].text : '';
   const translations = text
     .trim()
-    .split("\n")
+    .split('\n')
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
 
@@ -230,7 +230,7 @@ Translations (one per line, no numbers):`;
     );
     // Pad with empty strings if needed
     while (translations.length < strings.length) {
-      translations.push("");
+      translations.push('');
     }
   }
 
@@ -241,7 +241,7 @@ Translations (one per line, no numbers):`;
  * Main function
  */
 async function main() {
-  console.log("🌍 AI Translation Script\n");
+  console.log('🌍 AI Translation Script\n');
 
   let totalTranslated = 0;
   let totalSkipped = 0;
@@ -252,7 +252,7 @@ async function main() {
     for (const pathTemplate of PO_FILE_PATHS) {
       const filePath = path.resolve(
         ROOT_DIR,
-        pathTemplate.replace("{locale}", locale)
+        pathTemplate.replace('{locale}', locale)
       );
       console.log(`\n  File: ${path.relative(ROOT_DIR, filePath)}`);
 
@@ -265,7 +265,7 @@ async function main() {
       );
 
       if (untranslated.length === 0) {
-        console.log("  ✓ All strings already translated");
+        console.log('  ✓ All strings already translated');
         totalSkipped += poFile.entries.length;
         continue;
       }

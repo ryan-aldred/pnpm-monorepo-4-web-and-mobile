@@ -1,1 +1,6 @@
-export { ThemeProvider, useTheme, type Theme, type ResolvedTheme } from './provider';
+export {
+  ThemeProvider,
+  useTheme,
+  type Theme,
+  type ResolvedTheme,
+} from './provider';

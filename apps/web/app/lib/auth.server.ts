@@ -34,13 +34,8 @@ export function createAuth(db: DrizzleD1Database<typeof schema>, env: AuthEnv) {
         maxAge: 60 * 5, // 5 minutes
       },
     },
-    plugins: [
-      expo(),
-    ],
-    trustedOrigins: [
-      'monorepo://',
-      'exp://',
-    ],
+    plugins: [expo()],
+    trustedOrigins: ['monorepo://', 'exp://'],
   });
 }
 

@@ -3,11 +3,11 @@ export {
   detectLocaleFromHeader,
   activateLocale,
   mergeMessages,
-} from "./setup";
+} from './setup';
 
 export {
   SUPPORTED_LOCALES,
   DEFAULT_LOCALE,
   isSupportedLocale,
   type SupportedLocale,
-} from "./types";
+} from './types';

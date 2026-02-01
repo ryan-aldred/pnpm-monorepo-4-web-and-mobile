@@ -1,22 +1,22 @@
-import { type I18n, type Messages } from "@lingui/core";
+import { type I18n, type Messages } from '@lingui/core';
 import {
   createI18nInstance,
   detectLocaleFromHeader,
   activateLocale,
   DEFAULT_LOCALE,
   type SupportedLocale,
-} from "@monorepo/i18n";
+} from '@monorepo/i18n';
 
 // Import compiled message catalogs (from .po files)
 // Common translations from packages/i18n
-import { messages as commonEn } from "@monorepo/i18n/locales/en/messages.mjs";
-import { messages as commonEs } from "@monorepo/i18n/locales/es/messages.mjs";
-import { messages as commonFr } from "@monorepo/i18n/locales/fr/messages.mjs";
+import { messages as commonEn } from '@monorepo/i18n/locales/en/messages.mjs';
+import { messages as commonEs } from '@monorepo/i18n/locales/es/messages.mjs';
+import { messages as commonFr } from '@monorepo/i18n/locales/fr/messages.mjs';
 
 // Web-specific translations
-import { messages as webEn } from "~/locales/en/messages.mjs";
-import { messages as webEs } from "~/locales/es/messages.mjs";
-import { messages as webFr } from "~/locales/fr/messages.mjs";
+import { messages as webEn } from '~/locales/en/messages.mjs';
+import { messages as webEs } from '~/locales/es/messages.mjs';
+import { messages as webFr } from '~/locales/fr/messages.mjs';
 
 // Merge common + web-specific messages for each locale
 const allMessages: Record<SupportedLocale, Messages> = {
@@ -26,7 +26,7 @@ const allMessages: Record<SupportedLocale, Messages> = {
 };
 
 // Detect if we're on the server or client
-const isServer = typeof window === "undefined";
+const isServer = typeof window === 'undefined';
 
 // Client singleton for hydration consistency (only used on client)
 let clientI18n: I18n | null = null;
@@ -78,7 +78,7 @@ export function initClientI18n(locale: SupportedLocale): I18n {
  */
 export function getClientI18n(): I18n {
   if (!clientI18n) {
-    throw new Error("Client i18n not initialized. Call initClientI18n first.");
+    throw new Error('Client i18n not initialized. Call initClientI18n first.');
   }
   return clientI18n;
 }
@@ -99,13 +99,13 @@ export function setClientLocale(locale: SupportedLocale): void {
  */
 export function getLocaleFromRequest(request: Request): SupportedLocale {
   // Check for locale cookie first
-  const cookieHeader = request.headers.get("Cookie");
+  const cookieHeader = request.headers.get('Cookie');
   if (cookieHeader) {
     const localeCookie = cookieHeader
-      .split(";")
-      .find((c) => c.trim().startsWith("locale="));
+      .split(';')
+      .find((c) => c.trim().startsWith('locale='));
     if (localeCookie) {
-      const locale = localeCookie.split("=")[1]?.trim();
+      const locale = localeCookie.split('=')[1]?.trim();
       if (locale && locale in allMessages) {
         return locale as SupportedLocale;
       }
@@ -113,7 +113,7 @@ export function getLocaleFromRequest(request: Request): SupportedLocale {
   }
 
   // Fall back to Accept-Language header
-  const acceptLanguage = request.headers.get("Accept-Language");
+  const acceptLanguage = request.headers.get('Accept-Language');
   return detectLocaleFromHeader(acceptLanguage);
 }
 

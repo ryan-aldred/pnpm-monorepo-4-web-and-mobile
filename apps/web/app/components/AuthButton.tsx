@@ -7,7 +7,9 @@ export function AuthButton() {
   const { i18n } = useLingui();
   const location = useLocation();
   const [mounted, setMounted] = useState(false);
-  const [session, setSession] = useState<{ user: { name: string } } | null>(null);
+  const [session, setSession] = useState<{ user: { name: string } } | null>(
+    null
+  );
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
@@ -49,9 +51,7 @@ export function AuthButton() {
 
   return (
     <Button variant="ghost" size="sm" asChild>
-      <Link to="/login">
-        {i18n._('Sign in')}
-      </Link>
+      <Link to="/login">{i18n._('Sign in')}</Link>
     </Button>
   );
 }

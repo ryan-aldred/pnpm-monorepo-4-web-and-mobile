@@ -47,9 +47,18 @@ export default defineConfig({
       '~': path.resolve(__dirname, 'app'),
       '@monorepo/ui': path.resolve(__dirname, '../../packages/ui/src'),
       '@monorepo/types': path.resolve(__dirname, '../../packages/types/src'),
-      '@monorepo/database': path.resolve(__dirname, '../../packages/database/src/index.ts'),
-      '@monorepo/i18n/locales': path.resolve(__dirname, '../../packages/i18n/src/locales'),
-      '@monorepo/i18n': path.resolve(__dirname, '../../packages/i18n/src/index.ts'),
+      '@monorepo/database': path.resolve(
+        __dirname,
+        '../../packages/database/src/index.ts'
+      ),
+      '@monorepo/i18n/locales': path.resolve(
+        __dirname,
+        '../../packages/i18n/src/locales'
+      ),
+      '@monorepo/i18n': path.resolve(
+        __dirname,
+        '../../packages/i18n/src/index.ts'
+      ),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     dedupe: ['react', 'react-dom', '@lingui/react', '@lingui/core'],
@@ -58,7 +67,14 @@ export default defineConfig({
     exclude: ['@lingui/react'],
   },
   ssr: {
-    noExternal: ['@monorepo/types', '@monorepo/ui', '@monorepo/database', '@monorepo/i18n', '@lingui/core', '@lingui/react'],
+    noExternal: [
+      '@monorepo/types',
+      '@monorepo/ui',
+      '@monorepo/database',
+      '@monorepo/i18n',
+      '@lingui/core',
+      '@lingui/react',
+    ],
     target: 'webworker',
   },
 });

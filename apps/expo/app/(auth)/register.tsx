@@ -71,7 +71,11 @@ export default function Register() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          padding: 20,
+        }}
         keyboardShouldPersistTaps="handled"
       >
         <Box
@@ -160,13 +164,11 @@ export default function Register() {
               </Input>
             </FormControl>
 
-            <Button
-              onPress={handleRegister}
-              isDisabled={isLoading}
-              size="lg"
-            >
+            <Button onPress={handleRegister} isDisabled={isLoading} size="lg">
               {isLoading && <ButtonSpinner mr="$2" />}
-              <ButtonText>{isLoading ? 'Creating account...' : 'Create Account'}</ButtonText>
+              <ButtonText>
+                {isLoading ? 'Creating account...' : 'Create Account'}
+              </ButtonText>
             </Button>
 
             <HStack justifyContent="center" space="xs">

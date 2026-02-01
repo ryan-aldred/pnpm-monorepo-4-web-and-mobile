@@ -1,13 +1,13 @@
-import { defineConfig } from "@lingui/conf";
+import { defineConfig } from '@lingui/conf';
 
 export default defineConfig({
-  sourceLocale: "en",
-  locales: ["en", "es", "fr"],
+  sourceLocale: 'en',
+  locales: ['en', 'es', 'fr'],
   catalogs: [
     {
-      path: "<rootDir>/locales/{locale}/messages",
-      include: ["app", "lib"],
+      path: '<rootDir>/locales/{locale}/messages',
+      include: ['app', 'lib'],
     },
   ],
-  format: "po",
+  format: 'po',
 });

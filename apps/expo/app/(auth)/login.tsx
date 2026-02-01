@@ -57,7 +57,11 @@ export default function Login() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', padding: 20 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          padding: 20,
+        }}
         keyboardShouldPersistTaps="handled"
       >
         <Box
@@ -114,11 +118,7 @@ export default function Login() {
               </Input>
             </FormControl>
 
-            <Button
-              onPress={handleLogin}
-              isDisabled={isLoading}
-              size="lg"
-            >
+            <Button onPress={handleLogin} isDisabled={isLoading} size="lg">
               {isLoading && <ButtonSpinner mr="$2" />}
               <ButtonText>{isLoading ? 'Signing in...' : 'Sign In'}</ButtonText>
             </Button>

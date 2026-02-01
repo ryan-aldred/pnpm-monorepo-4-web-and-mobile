@@ -1,9 +1,5 @@
 import { useRouter } from 'expo-router';
-import {
-  HStack,
-  Text,
-  Pressable,
-} from '@gluestack-ui/themed';
+import { HStack, Text, Pressable } from '@gluestack-ui/themed';
 import { useSession, signOut } from '../auth-client';
 
 export function HeaderAuthButton() {
@@ -20,11 +16,7 @@ export function HeaderAuthButton() {
         <Text color="$white" fontSize="$sm">
           {session.user.name}
         </Text>
-        <Pressable
-          onPress={() => signOut()}
-          px="$3"
-          py="$1.5"
-        >
+        <Pressable onPress={() => signOut()} px="$3" py="$1.5">
           <Text color="$white" fontSize="$sm" fontWeight="$medium">
             Sign out
           </Text>

@@ -1,8 +1,8 @@
-import { useState, useEffect, type ReactNode } from "react";
-import { I18nProvider as LinguiProvider } from "@lingui/react";
-import type { I18n } from "@lingui/core";
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
-import { initializeI18n, getI18n } from "./setup";
+import { useState, useEffect, type ReactNode } from 'react';
+import { I18nProvider as LinguiProvider } from '@lingui/react';
+import type { I18n } from '@lingui/core';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { initializeI18n, getI18n } from './setup';
 
 interface I18nProviderProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ export function I18nProvider({ children }: I18nProviderProps) {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error("Failed to initialize i18n:", error);
+        console.error('Failed to initialize i18n:', error);
         // Fall back to uninitialized instance
         setI18n(getI18n());
         setIsLoading(false);
@@ -41,8 +41,8 @@ export function I18nProvider({ children }: I18nProviderProps) {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingText: {
     marginTop: 10,
