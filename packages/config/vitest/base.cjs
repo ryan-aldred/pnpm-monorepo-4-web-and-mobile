@@ -1,16 +1,12 @@
-import { defineConfig } from 'vitest/config';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const { defineConfig } = require('vitest/config');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export function createVitestConfig(rootDir: string) {
+function createVitestConfig(rootDir) {
   return defineConfig({
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: [path.resolve(__dirname, './setup.ts')],
+      setupFiles: [path.resolve(__dirname, './setup.mjs')],
       include: ['**/*.{test,spec}.{ts,tsx}'],
       exclude: [
         '**/node_modules/**',
@@ -33,3 +29,5 @@ export function createVitestConfig(rootDir: string) {
     },
   });
 }
+
+module.exports = { createVitestConfig };
