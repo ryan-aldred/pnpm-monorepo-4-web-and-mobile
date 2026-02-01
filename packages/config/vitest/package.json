@@ -2,11 +2,18 @@
   "name": "@monorepo/config-vitest",
   "version": "0.0.0",
   "private": true,
-  "main": "base.ts",
+  "main": "base.cjs",
+  "types": "base.d.ts",
   "exports": {
-    ".": "./base.ts",
-    "./base": "./base.ts",
-    "./setup": "./setup.ts"
+    ".": {
+      "types": "./base.d.ts",
+      "default": "./base.cjs"
+    },
+    "./base": {
+      "types": "./base.d.ts",
+      "default": "./base.cjs"
+    },
+    "./setup": "./setup.mjs"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
