@@ -1,6 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from 'react-router';
 import type { LinksFunction, LoaderFunctionArgs } from 'react-router';
 import { I18nProvider, getI18nInstance, getLocaleFromRequest, DEFAULT_LOCALE, type SupportedLocale } from '~/i18n';
+import { ThemeProvider } from '~/theme';
 import { Header } from '~/components/Header';
 import './tailwind.css';
 
@@ -42,6 +43,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t!=='light'&&d))document.documentElement.classList.add('dark')})();`,
+          }}
+        />
       </head>
       <body>
         {children}
@@ -59,13 +65,15 @@ export default function App() {
   const i18n = getI18nInstance(locale);
 
   return (
-    <I18nProvider i18n={i18n}>
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-      </div>
-    </I18nProvider>
+    <ThemeProvider>
+      <I18nProvider i18n={i18n}>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+        </div>
+      </I18nProvider>
+    </ThemeProvider>
   );
 }
