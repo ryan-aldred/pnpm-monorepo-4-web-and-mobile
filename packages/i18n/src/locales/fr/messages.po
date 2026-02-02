@@ -108,3 +108,34 @@ msgstr ""
 
 #~ msgid "You are not authorized to perform this action."
 #~ msgstr "Vous n'etes pas autorise a effectuer cette action."
+
+#. Validation messages
+msgid "validation.email.required"
+msgstr "L'email est obligatoire"
+
+msgid "validation.email.invalid"
+msgstr "Veuillez entrer une adresse email valide"
+
+msgid "validation.password.required"
+msgstr "Le mot de passe est obligatoire"
+
+msgid "validation.password.minLength"
+msgstr "Le mot de passe doit contenir au moins 8 caracteres"
+
+msgid "validation.password.lowercase"
+msgstr "Le mot de passe doit contenir une lettre minuscule"
+
+msgid "validation.password.uppercase"
+msgstr "Le mot de passe doit contenir une lettre majuscule"
+
+msgid "validation.password.number"
+msgstr "Le mot de passe doit contenir un chiffre"
+
+msgid "validation.password.mismatch"
+msgstr "Les mots de passe ne correspondent pas"
+
+msgid "validation.name.required"
+msgstr "Le nom est obligatoire"
+
+msgid "validation.name.minLength"
+msgstr "Le nom doit contenir au moins 2 caracteres"

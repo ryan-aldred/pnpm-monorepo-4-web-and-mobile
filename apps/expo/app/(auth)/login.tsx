@@ -23,26 +23,42 @@ import {
 import { AlertCircle } from 'lucide-react-native';
 import { signIn } from '../../lib/auth-client';
 import { useTheme } from '../../lib/theme';
+import { FormFieldError } from '../../components/FormFieldError';
+import {
+  LoginSchema,
+  validate,
+  errorsToMap,
+  type FieldErrors,
+} from '@monorepo/core/validation';
 
 export default function Login() {
   const { isDark } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
     setError('');
+    setFieldErrors({});
+
+    const result = validate(LoginSchema, { email, password });
+    if (!result.success) {
+      setFieldErrors(errorsToMap(result.errors!));
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const result = await signIn.email({
+      const signInResult = await signIn.email({
         email,
         password,
       });
 
-      if (result.error) {
-        setError(result.error.message || 'Login failed');
+      if (signInResult.error) {
+        setError(signInResult.error.message || 'Login failed');
       } else {
         router.replace('/');
       }
@@ -95,7 +111,7 @@ export default function Login() {
               </Alert>
             ) : null}
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.email}>
               <FormControlLabel>
                 <FormControlLabelText>Email</FormControlLabelText>
               </FormControlLabel>
@@ -110,9 +126,10 @@ export default function Login() {
                   textContentType="emailAddress"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.email} />
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.password}>
               <FormControlLabel>
                 <FormControlLabelText>Password</FormControlLabelText>
               </FormControlLabel>
@@ -125,6 +142,7 @@ export default function Login() {
                   textContentType="password"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.password} />
             </FormControl>
 
             <Button onPress={handleLogin} isDisabled={isLoading} size="lg">

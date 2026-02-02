@@ -7,6 +7,7 @@ export default defineConfig({
     'hooks/index': 'src/hooks/index.ts',
     'utils/index': 'src/utils/index.ts',
     'data/index': 'src/data/index.ts',
+    'validation/index': 'src/validation/index.ts',
   },
   format: ['esm'],
   dts: true,

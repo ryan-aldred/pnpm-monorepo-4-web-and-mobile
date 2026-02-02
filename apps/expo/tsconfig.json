@@ -6,6 +6,7 @@
       "@/*": ["./app/*"],
       "@monorepo/ui": ["../../packages/ui/src"],
       "@monorepo/core": ["../../packages/core/src"],
+      "@monorepo/core/*": ["../../packages/core/src/*"],
       "@monorepo/types": ["../../packages/types/src"],
       "@monorepo/mocks/*": ["../../packages/mocks/src/*"],
       "@monorepo/i18n": ["../../packages/i18n/src"],

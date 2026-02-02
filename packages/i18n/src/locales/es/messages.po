@@ -108,3 +108,34 @@ msgstr ""
 
 #~ msgid "You are not authorized to perform this action."
 #~ msgstr "No esta autorizado para realizar esta accion."
+
+#. Validation messages
+msgid "validation.email.required"
+msgstr "El correo electronico es obligatorio"
+
+msgid "validation.email.invalid"
+msgstr "Por favor ingrese un correo electronico valido"
+
+msgid "validation.password.required"
+msgstr "La contrasena es obligatoria"
+
+msgid "validation.password.minLength"
+msgstr "La contrasena debe tener al menos 8 caracteres"
+
+msgid "validation.password.lowercase"
+msgstr "La contrasena debe contener una letra minuscula"
+
+msgid "validation.password.uppercase"
+msgstr "La contrasena debe contener una letra mayuscula"
+
+msgid "validation.password.number"
+msgstr "La contrasena debe contener un numero"
+
+msgid "validation.password.mismatch"
+msgstr "Las contrasenas no coinciden"
+
+msgid "validation.name.required"
+msgstr "El nombre es obligatorio"
+
+msgid "validation.name.minLength"
+msgstr "El nombre debe tener al menos 2 caracteres"

@@ -24,6 +24,10 @@
     "./data": {
       "types": "./dist/data/index.d.mts",
       "import": "./dist/data/index.mjs"
+    },
+    "./validation": {
+      "types": "./dist/validation/index.d.mts",
+      "import": "./dist/validation/index.mjs"
     }
   },
   "scripts": {
@@ -36,6 +40,7 @@
   "dependencies": {
     "@monorepo/types": "workspace:*",
     "react": "^18.3.1",
+    "valibot": "^1.2.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
