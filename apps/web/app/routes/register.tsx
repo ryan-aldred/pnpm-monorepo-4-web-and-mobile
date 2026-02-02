@@ -4,7 +4,7 @@ import { AlertCircle, Loader2 } from 'lucide-react';
 import { signUp } from '~/lib/auth.client';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { Label } from '~/components/ui/label';
+import { FormField } from '~/components/ui/form-field';
 import { Alert, AlertDescription } from '~/components/ui/alert';
 import {
   Card,
@@ -13,6 +13,12 @@ import {
   CardTitle,
   CardFooter,
 } from '~/components/ui/card';
+import {
+  RegisterSchema,
+  validate,
+  errorsToMap,
+  type FieldErrors,
+} from '@monorepo/core/validation';
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,33 +34,36 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setFieldErrors({});
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+    const result = validate(RegisterSchema, {
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (!result.success) {
+      setFieldErrors(errorsToMap(result.errors!));
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const result = await signUp.email({
+      const signUpResult = await signUp.email({
         name,
         email,
         password,
       });
 
-      if (result.error) {
-        setError(result.error.message || 'Registration failed');
+      if (signUpResult.error) {
+        setError(signUpResult.error.message || 'Registration failed');
       } else {
         navigate('/');
       }
@@ -66,7 +75,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">Register</CardTitle>
@@ -80,8 +89,7 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+            <FormField label="Name" htmlFor="name" error={fieldErrors.name}>
               <Input
                 id="name"
                 type="text"
@@ -89,12 +97,10 @@ export default function Register() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
                 autoComplete="name"
-                required
               />
-            </div>
+            </FormField>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+            <FormField label="Email" htmlFor="email" error={fieldErrors.email}>
               <Input
                 id="email"
                 type="email"
@@ -102,12 +108,14 @@ export default function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 autoComplete="email"
-                required
               />
-            </div>
+            </FormField>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <FormField
+              label="Password"
+              htmlFor="password"
+              error={fieldErrors.password}
+            >
               <Input
                 id="password"
                 type="password"
@@ -115,13 +123,14 @@ export default function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 8 characters"
                 autoComplete="new-password"
-                minLength={8}
-                required
               />
-            </div>
+            </FormField>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <FormField
+              label="Confirm Password"
+              htmlFor="confirmPassword"
+              error={fieldErrors.confirmPassword}
+            >
               <Input
                 id="confirmPassword"
                 type="password"
@@ -129,9 +138,8 @@ export default function Register() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
                 autoComplete="new-password"
-                required
               />
-            </div>
+            </FormField>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -140,7 +148,7 @@ export default function Register() {
           </form>
         </CardContent>
         <CardFooter className="justify-center">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             Already have an account?{' '}
             <Link
               to="/login"

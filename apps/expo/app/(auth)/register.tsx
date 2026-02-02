@@ -23,6 +23,13 @@ import {
 import { AlertCircle } from 'lucide-react-native';
 import { signUp } from '../../lib/auth-client';
 import { useTheme } from '../../lib/theme';
+import { FormFieldError } from '../../components/FormFieldError';
+import {
+  RegisterSchema,
+  validate,
+  errorsToMap,
+  type FieldErrors,
+} from '@monorepo/core/validation';
 
 export default function Register() {
   const { isDark } = useTheme();
@@ -31,32 +38,35 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
     setError('');
+    setFieldErrors({});
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
+    const result = validate(RegisterSchema, {
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (!result.success) {
+      setFieldErrors(errorsToMap(result.errors!));
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const result = await signUp.email({
+      const signUpResult = await signUp.email({
         name,
         email,
         password,
       });
 
-      if (result.error) {
-        setError(result.error.message || 'Registration failed');
+      if (signUpResult.error) {
+        setError(signUpResult.error.message || 'Registration failed');
       } else {
         router.replace('/');
       }
@@ -109,7 +119,7 @@ export default function Register() {
               </Alert>
             ) : null}
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.name}>
               <FormControlLabel>
                 <FormControlLabelText>Name</FormControlLabelText>
               </FormControlLabel>
@@ -122,9 +132,10 @@ export default function Register() {
                   textContentType="name"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.name} />
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.email}>
               <FormControlLabel>
                 <FormControlLabelText>Email</FormControlLabelText>
               </FormControlLabel>
@@ -139,9 +150,10 @@ export default function Register() {
                   textContentType="emailAddress"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.email} />
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.password}>
               <FormControlLabel>
                 <FormControlLabelText>Password</FormControlLabelText>
               </FormControlLabel>
@@ -155,9 +167,10 @@ export default function Register() {
                   autoComplete="off"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.password} />
             </FormControl>
 
-            <FormControl>
+            <FormControl isInvalid={!!fieldErrors.confirmPassword}>
               <FormControlLabel>
                 <FormControlLabelText>Confirm Password</FormControlLabelText>
               </FormControlLabel>
@@ -171,6 +184,7 @@ export default function Register() {
                   autoComplete="off"
                 />
               </Input>
+              <FormFieldError error={fieldErrors.confirmPassword} />
             </FormControl>
 
             <Button onPress={handleRegister} isDisabled={isLoading} size="lg">
