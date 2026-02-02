@@ -21,13 +21,14 @@ import {
   errorsToMap,
   type FieldErrors,
 } from '@monorepo/core/validation';
+import { createMeta } from '~/lib/meta';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: 'Login' },
-    { name: 'description', content: 'Login to your account' },
-  ];
-};
+export const meta: MetaFunction = () =>
+  createMeta({
+    title: 'Login',
+    description: 'Login to your account',
+    robots: { index: false },
+  });
 
 export default function Login() {
   const navigate = useNavigate();
