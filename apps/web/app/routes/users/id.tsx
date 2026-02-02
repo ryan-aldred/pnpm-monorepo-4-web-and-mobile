@@ -6,6 +6,8 @@ import {
 } from 'react-router';
 import { LoaderHandler, ActionHandler } from '~/utils/routing/handlers';
 
+export { RouteErrorBoundary as ErrorBoundary } from '~/components/error';
+
 export async function loader(context: LoaderFunctionArgs) {
   const loaderHandler = new LoaderHandler(context, {
     get: async (_context: LoaderFunctionArgs) => {

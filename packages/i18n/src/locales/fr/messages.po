@@ -139,3 +139,40 @@ msgstr "Le nom est obligatoire"
 
 msgid "validation.name.minLength"
 msgstr "Le nom doit contenir au moins 2 caracteres"
+
+#. Error boundary messages
+msgid "error.unexpected.title"
+msgstr "Une erreur s'est produite"
+
+msgid "error.unexpected.message"
+msgstr "Une erreur inattendue s'est produite. Veuillez réessayer."
+
+msgid "error.notFound.title"
+msgstr "Page non trouvée"
+
+msgid "error.notFound.message"
+msgstr "La page que vous recherchez n'existe pas."
+
+msgid "error.network.title"
+msgstr "Erreur de connexion"
+
+msgid "error.network.message"
+msgstr "Veuillez vérifier votre connexion internet et réessayer."
+
+msgid "error.unauthorized.title"
+msgstr "Accès refusé"
+
+msgid "error.unauthorized.message"
+msgstr "Vous n'avez pas la permission de voir cette page."
+
+msgid "error.action.tryAgain"
+msgstr "Réessayer"
+
+msgid "error.action.goHome"
+msgstr "Aller à l'accueil"
+
+msgid "error.action.goBack"
+msgstr "Retour"
+
+msgid "error.details.title"
+msgstr "Détails de l'erreur"

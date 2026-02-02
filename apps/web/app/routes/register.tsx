@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate, type MetaFunction } from 'react-router';
 import { AlertCircle, Loader2 } from 'lucide-react';
+
+export { RouteErrorBoundary as ErrorBoundary } from '~/components/error';
 import { signUp } from '~/lib/auth.client';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
