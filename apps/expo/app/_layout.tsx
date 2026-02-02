@@ -9,7 +9,10 @@ import { ThemeProvider, useTheme } from '../lib/theme';
 import { HeaderLanguageButton } from '../lib/components/HeaderLanguageButton';
 import { HeaderAuthButton } from '../lib/components/HeaderAuthButton';
 import { ThemeToggle } from '../lib/components/ThemeToggle';
+import { RootErrorBoundary } from '../lib/components/RootErrorBoundary';
 import '../global.css';
+
+export { RootErrorBoundary as ErrorBoundary };
 
 // Initialize mocks before the app renders
 async function initMocks() {

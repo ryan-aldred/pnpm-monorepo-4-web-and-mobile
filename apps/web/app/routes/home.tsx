@@ -1,6 +1,8 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
 import { getUsers } from '@monorepo/core/data';
 
+export { RouteErrorBoundary as ErrorBoundary } from '~/components/error';
+
 export const meta: MetaFunction = () => {
   return [
     { title: 'Expo + React Router 7 Monorepo' },

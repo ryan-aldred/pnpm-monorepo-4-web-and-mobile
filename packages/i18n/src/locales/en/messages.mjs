@@ -10,5 +10,17 @@ export const messages = {
   "validation.password.number": "Password must contain a number",
   "validation.password.mismatch": "Passwords do not match",
   "validation.name.required": "Name is required",
-  "validation.name.minLength": "Name must be at least 2 characters"
+  "validation.name.minLength": "Name must be at least 2 characters",
+  "error.unexpected.title": "Something went wrong",
+  "error.unexpected.message": "An unexpected error occurred. Please try again.",
+  "error.notFound.title": "Page not found",
+  "error.notFound.message": "The page you're looking for doesn't exist.",
+  "error.network.title": "Connection error",
+  "error.network.message": "Please check your internet connection and try again.",
+  "error.unauthorized.title": "Access denied",
+  "error.unauthorized.message": "You don't have permission to view this page.",
+  "error.action.tryAgain": "Try Again",
+  "error.action.goHome": "Go to Home",
+  "error.action.goBack": "Go Back",
+  "error.details.title": "Error Details"
 };

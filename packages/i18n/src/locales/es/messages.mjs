@@ -10,5 +10,17 @@ export const messages = {
   "validation.password.number": "La contrasena debe contener un numero",
   "validation.password.mismatch": "Las contrasenas no coinciden",
   "validation.name.required": "El nombre es obligatorio",
-  "validation.name.minLength": "El nombre debe tener al menos 2 caracteres"
+  "validation.name.minLength": "El nombre debe tener al menos 2 caracteres",
+  "error.unexpected.title": "Algo salió mal",
+  "error.unexpected.message": "Ocurrió un error inesperado. Por favor, inténtelo de nuevo.",
+  "error.notFound.title": "Página no encontrada",
+  "error.notFound.message": "La página que busca no existe.",
+  "error.network.title": "Error de conexión",
+  "error.network.message": "Por favor, verifique su conexión a internet e inténtelo de nuevo.",
+  "error.unauthorized.title": "Acceso denegado",
+  "error.unauthorized.message": "No tiene permiso para ver esta página.",
+  "error.action.tryAgain": "Reintentar",
+  "error.action.goHome": "Ir al inicio",
+  "error.action.goBack": "Volver",
+  "error.details.title": "Detalles del error"
 };

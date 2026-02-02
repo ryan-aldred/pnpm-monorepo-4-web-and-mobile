@@ -16,7 +16,10 @@ import {
 } from '~/i18n';
 import { ThemeProvider } from '~/theme';
 import { Header } from '~/components/Header';
+import { RootErrorBoundary } from '~/components/error';
 import './tailwind.css';
+
+export { RootErrorBoundary as ErrorBoundary };
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = getLocaleFromRequest(request);

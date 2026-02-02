@@ -139,3 +139,40 @@ msgstr "Name is required"
 
 msgid "validation.name.minLength"
 msgstr "Name must be at least 2 characters"
+
+#. Error boundary messages
+msgid "error.unexpected.title"
+msgstr "Something went wrong"
+
+msgid "error.unexpected.message"
+msgstr "An unexpected error occurred. Please try again."
+
+msgid "error.notFound.title"
+msgstr "Page not found"
+
+msgid "error.notFound.message"
+msgstr "The page you're looking for doesn't exist."
+
+msgid "error.network.title"
+msgstr "Connection error"
+
+msgid "error.network.message"
+msgstr "Please check your internet connection and try again."
+
+msgid "error.unauthorized.title"
+msgstr "Access denied"
+
+msgid "error.unauthorized.message"
+msgstr "You don't have permission to view this page."
+
+msgid "error.action.tryAgain"
+msgstr "Try Again"
+
+msgid "error.action.goHome"
+msgstr "Go to Home"
+
+msgid "error.action.goBack"
+msgstr "Go Back"
+
+msgid "error.details.title"
+msgstr "Error Details"

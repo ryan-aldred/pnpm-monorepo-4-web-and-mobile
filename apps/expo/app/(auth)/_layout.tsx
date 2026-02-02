@@ -3,6 +3,9 @@ import { Stack } from 'expo-router';
 import { useTheme } from '../../lib/theme';
 import { ThemeToggle } from '../../lib/components/ThemeToggle';
 import { HeaderLanguageButton } from '../../lib/components/HeaderLanguageButton';
+import { ExpoErrorBoundary } from '../../lib/components/ExpoErrorBoundary';
+
+export { ExpoErrorBoundary as ErrorBoundary };
 
 export default function AuthLayout() {
   const { isDark } = useTheme();

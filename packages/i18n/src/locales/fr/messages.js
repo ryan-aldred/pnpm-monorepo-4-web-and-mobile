@@ -14,4 +14,19 @@ module.exports.messages = {
   'validation.password.mismatch': 'Les mots de passe ne correspondent pas',
   'validation.name.required': 'Le nom est obligatoire',
   'validation.name.minLength': 'Le nom doit contenir au moins 2 caracteres',
+  'error.unexpected.title': "Une erreur s'est produite",
+  'error.unexpected.message':
+    "Une erreur inattendue s'est produite. Veuillez réessayer.",
+  'error.notFound.title': 'Page non trouvée',
+  'error.notFound.message': "La page que vous recherchez n'existe pas.",
+  'error.network.title': 'Erreur de connexion',
+  'error.network.message':
+    'Veuillez vérifier votre connexion internet et réessayer.',
+  'error.unauthorized.title': 'Accès refusé',
+  'error.unauthorized.message':
+    "Vous n'avez pas la permission de voir cette page.",
+  'error.action.tryAgain': 'Réessayer',
+  'error.action.goHome': "Aller à l'accueil",
+  'error.action.goBack': 'Retour',
+  'error.details.title': "Détails de l'erreur",
 };
