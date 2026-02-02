@@ -272,3 +272,423 @@ The `.github/workflows/i18n-translate.yml` workflow automatically:
 3. Creates a PR for review
 
 Requires `ANTHROPIC_API_KEY` in GitHub repo secrets
+
+## Error Boundaries
+
+Both apps have error boundaries for graceful error handling with i18n support and dark mode styling.
+
+### Web App (`apps/web`)
+
+Error boundaries use React Router's error handling pattern. Components are in `apps/web/app/components/error/`.
+
+| Component            | Purpose                                           |
+| -------------------- | ------------------------------------------------- |
+| `RootErrorBoundary`  | Full-page error for root layout (no hooks needed) |
+| `RouteErrorBoundary` | Inline error for individual routes (uses hooks)   |
+
+**Adding to new routes:**
+
+```tsx
+// In any route file (e.g., apps/web/app/routes/my-route.tsx)
+export { RouteErrorBoundary as ErrorBoundary } from '~/components/error';
+```
+
+The root error boundary is already exported from `apps/web/app/root.tsx`.
+
+**Features:**
+
+- Error classification (404, 401/403, network, unexpected)
+- i18n translations via `getI18nInstance(DEFAULT_LOCALE)` (root) or `useI18n()` (route)
+- Collapsible error details in development (`import.meta.env.DEV`)
+- Recovery actions: Try Again, Go Home, Go Back
+
+### Expo App (`apps/expo`)
+
+Error boundaries use expo-router's `ErrorBoundary` export pattern. Components are in `apps/expo/lib/components/`.
+
+| Component             | Purpose                                                      |
+| --------------------- | ------------------------------------------------------------ |
+| `RootErrorBoundary`   | Minimal error screen (no providers, uses React Native)       |
+| `ExpoErrorBoundary`   | Full-featured error screen (requires I18n + Theme providers) |
+| `ErrorBoundary`       | Class-based wrapper for custom error handling                |
+| `ErrorFallbackScreen` | Reusable error UI component                                  |
+
+**Adding to new layouts:**
+
+```tsx
+// Root layout (no provider access) - apps/expo/app/_layout.tsx
+export { RootErrorBoundary as ErrorBoundary } from '../lib/components/RootErrorBoundary';
+
+// Nested layouts (has provider access) - apps/expo/app/(auth)/_layout.tsx
+export { ExpoErrorBoundary as ErrorBoundary } from '../../lib/components/ExpoErrorBoundary';
+```
+
+**Features:**
+
+- Gluestack UI styling with dark mode support
+- i18n translations via `useLingui()`
+- Collapsible error details in development (`__DEV__`)
+- Recovery actions: Try Again, Go Home
+
+### Error Translation Keys
+
+All error messages are in `packages/i18n/src/locales/{locale}/messages.po`:
+
+| Key                          | English                                              |
+| ---------------------------- | ---------------------------------------------------- |
+| `error.unexpected.title`     | Something went wrong                                 |
+| `error.unexpected.message`   | An unexpected error occurred. Please try again.      |
+| `error.notFound.title`       | Page not found                                       |
+| `error.notFound.message`     | The page you're looking for doesn't exist.           |
+| `error.network.title`        | Connection error                                     |
+| `error.network.message`      | Please check your internet connection and try again. |
+| `error.unauthorized.title`   | Access denied                                        |
+| `error.unauthorized.message` | You don't have permission to view this page.         |
+| `error.action.tryAgain`      | Try Again                                            |
+| `error.action.goHome`        | Go to Home                                           |
+| `error.action.goBack`        | Go Back                                              |
+| `error.details.title`        | Error Details                                        |
+
+## Form Validation (Valibot)
+
+All schema validations use [Valibot](https://valibot.dev/) in `packages/core/src/validation/`. Schemas are shared across web and mobile apps.
+
+### File Structure
+
+```
+packages/core/src/validation/
+├── index.ts              # Re-exports everything
+├── types.ts              # TypeScript types (FieldError, ValidationResult, FieldErrors)
+├── schemas/
+│   ├── index.ts          # Re-exports all schemas
+│   ├── auth.ts           # Login, Register, Email, Password schemas
+│   └── user.ts           # CreateUser, UpdateUser schemas
+└── utils/
+    ├── index.ts          # Re-exports all utils
+    ├── errors.ts         # validate(), errorsToMap(), getFieldError()
+    ├── i18n.ts           # translateErrors(), translateError()
+    └── api.ts            # validateRequest() for API routes
+```
+
+### Creating Schemas
+
+Use i18n keys for error messages (not hardcoded strings):
+
+```tsx
+import * as v from 'valibot';
+
+// Basic field schema with i18n error messages
+export const EmailSchema = v.pipe(
+  v.string(),
+  v.nonEmpty('validation.email.required'),
+  v.email('validation.email.invalid')
+);
+
+// Schema with multiple validations
+export const StrongPasswordSchema = v.pipe(
+  v.string(),
+  v.nonEmpty('validation.password.required'),
+  v.minLength(8, 'validation.password.minLength'),
+  v.regex(/[a-z]/, 'validation.password.lowercase'),
+  v.regex(/[A-Z]/, 'validation.password.uppercase'),
+  v.regex(/[0-9]/, 'validation.password.number')
+);
+
+// Object schema
+export const LoginSchema = v.object({
+  email: EmailSchema,
+  password: PasswordSchema,
+});
+
+// Cross-field validation (e.g., confirmPassword)
+export const RegisterSchema = v.pipe(
+  v.object({
+    name: NameSchema,
+    email: EmailSchema,
+    password: StrongPasswordSchema,
+    confirmPassword: v.string(),
+  }),
+  v.forward(
+    v.partialCheck(
+      [['password'], ['confirmPassword']],
+      (input) => input.password === input.confirmPassword,
+      'validation.password.mismatch'
+    ),
+    ['confirmPassword']
+  )
+);
+
+// Infer TypeScript types from schemas
+export type LoginInput = v.InferInput<typeof LoginSchema>;
+```
+
+### Using Validation in Components
+
+```tsx
+import {
+  LoginSchema,
+  validate,
+  errorsToMap,
+  type FieldErrors,
+} from '@monorepo/core/validation';
+
+const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setFieldErrors({});
+
+  const result = validate(LoginSchema, { email, password });
+  if (!result.success) {
+    setFieldErrors(errorsToMap(result.errors!));
+    return;
+  }
+
+  // result.data is typed as LoginInput
+  await signIn(result.data);
+};
+```
+
+### API Route Validation
+
+```tsx
+import { validateRequest, LoginSchema } from '@monorepo/core/validation';
+
+export async function action({ request }: ActionFunctionArgs) {
+  const result = await validateRequest(LoginSchema, request);
+
+  if (!result.success) {
+    return result.response; // Returns 400 with validation errors
+  }
+
+  // result.data is typed and validated
+  return handleLogin(result.data);
+}
+```
+
+### i18n Integration
+
+Validation error messages are i18n keys. Add translations to `packages/i18n/src/locales/{locale}/messages.po`:
+
+```po
+msgid "validation.email.required"
+msgstr "Email is required"
+
+msgid "validation.email.invalid"
+msgstr "Please enter a valid email address"
+```
+
+To translate errors for display:
+
+```tsx
+import { translateErrors } from '@monorepo/core/validation';
+import { useI18n } from '~/i18n';
+
+const i18n = useI18n();
+const translatedErrors = translateErrors(fieldErrors, (key) => i18n._(key));
+```
+
+### Adding New Schemas
+
+1. Create schema in `packages/core/src/validation/schemas/` (or add to existing file)
+2. Export from `packages/core/src/validation/schemas/index.ts`
+3. Add i18n keys to `packages/i18n/src/locales/en/messages.po`
+4. Run `pnpm i18n:translate && pnpm i18n:compile`
+
+### Common Valibot Patterns
+
+```tsx
+import * as v from 'valibot';
+
+// Optional fields
+v.optional(EmailSchema);
+
+// Nullable
+v.nullable(v.string());
+
+// Arrays
+v.array(v.string());
+
+// Enums
+v.picklist(['admin', 'user', 'guest']);
+
+// Numbers
+v.pipe(v.number(), v.minValue(0), v.maxValue(100));
+
+// Dates
+v.pipe(v.string(), v.isoDate());
+
+// Custom validation
+v.pipe(
+  v.string(),
+  v.custom((input) => myCustomCheck(input), 'validation.custom.error')
+);
+```
+
+## SEO Metadata (Web App)
+
+The web app has a comprehensive metadata framework for SEO, OpenGraph, Twitter Cards, and JSON-LD structured data.
+
+### File Structure
+
+```
+apps/web/app/lib/meta/
+├── index.ts           # Re-exports all utilities
+├── types.ts           # TypeScript interfaces
+├── config.ts          # Site-wide defaults (siteName, siteUrl, etc.)
+├── create-meta.ts     # Main createMeta() helper
+└── structured-data.ts # JSON-LD schema helpers
+```
+
+### Basic Usage
+
+```tsx
+import { createMeta } from '~/lib/meta';
+import type { MetaFunction } from 'react-router';
+
+export const meta: MetaFunction = () =>
+  createMeta({
+    title: 'About Us',
+    description: 'Learn more about our company',
+    canonical: '/about',
+  });
+```
+
+This generates: title (with site name template), description, OpenGraph tags, Twitter Card tags, and uses the default OG image.
+
+### MetaConfig Options
+
+| Option            | Type                              | Description                                |
+| ----------------- | --------------------------------- | ------------------------------------------ |
+| `title`           | `string`                          | Page title (templated with site name)      |
+| `description`     | `string`                          | Meta description                           |
+| `canonical`       | `string`                          | Canonical URL path (relative)              |
+| `ogType`          | `'website' \| 'article'`          | OpenGraph type (default: `'website'`)      |
+| `ogImage`         | `string \| OgImage`               | OG image URL or object with dimensions     |
+| `twitterCard`     | `'summary' \| 'summary_large_image'` | Twitter card type                       |
+| `robots`          | `RobotsConfig \| string`          | Robots directives                          |
+| `article`         | `ArticleMeta`                     | Article metadata (when ogType is article)  |
+| `noTitleTemplate` | `boolean`                         | Disable "Title \| Site Name" template      |
+| `custom`          | `MetaDescriptor[]`                | Additional custom meta tags                |
+
+### Robots Configuration
+
+```tsx
+// Object form (recommended)
+createMeta({
+  robots: { index: false, follow: true },
+});
+
+// String form
+createMeta({
+  robots: 'noindex, nofollow',
+});
+```
+
+### Article Metadata (Blog Posts)
+
+```tsx
+createMeta({
+  title: 'How to Build a Monorepo',
+  description: 'A guide to monorepo architecture',
+  ogType: 'article',
+  article: {
+    publishedTime: '2024-01-15T10:00:00Z',
+    modifiedTime: '2024-01-20T15:30:00Z',
+    author: 'John Doe',
+    section: 'Engineering',
+    tags: ['monorepo', 'typescript', 'react'],
+  },
+});
+```
+
+### JSON-LD Structured Data
+
+Use the `JsonLd` component with schema helpers:
+
+```tsx
+import { createMeta, createWebSiteSchema, createWebPageSchema } from '~/lib/meta';
+import { JsonLd } from '~/components/JsonLd';
+
+// Home page with WebSite schema
+export default function Home() {
+  return (
+    <>
+      <JsonLd schema={createWebSiteSchema()} />
+      {/* content */}
+    </>
+  );
+}
+
+// Generic page with WebPage schema
+export default function About() {
+  return (
+    <>
+      <JsonLd schema={createWebPageSchema({
+        name: 'About Us',
+        path: '/about',
+        description: 'Learn about our company',
+      })} />
+      {/* content */}
+    </>
+  );
+}
+```
+
+#### Available Schema Helpers
+
+| Function                  | Use Case                    |
+| ------------------------- | --------------------------- |
+| `createWebSiteSchema()`   | Home page                   |
+| `createWebPageSchema()`   | Generic pages               |
+| `createArticleSchema()`   | Blog posts                  |
+| `createBreadcrumbSchema()`| Navigation breadcrumbs      |
+
+### Canonical Links
+
+For the route's `links` export:
+
+```tsx
+import { createCanonicalLink } from '~/lib/meta';
+
+export const links = () => [createCanonicalLink('/about')];
+```
+
+### Adding Meta to New Routes
+
+1. Import `createMeta` from `~/lib/meta`
+2. Export a `meta` function that calls `createMeta()`
+3. Optionally add JSON-LD with the `JsonLd` component
+
+```tsx
+// Minimal route with meta
+import { createMeta } from '~/lib/meta';
+import type { MetaFunction } from 'react-router';
+
+export const meta: MetaFunction = () =>
+  createMeta({
+    title: 'New Page',
+    description: 'Description for SEO',
+  });
+
+export default function NewPage() {
+  return <div>Content</div>;
+}
+```
+
+### Site Configuration
+
+Edit `apps/web/app/lib/meta/config.ts` to change site-wide defaults:
+
+- `siteName` - Site name for OG tags and title template
+- `siteUrl` - Base URL (reads from `SITE_URL` env var)
+- `defaultImage` - Default OG image
+- `defaultDescription` - Fallback description
+- `twitterHandle` - Twitter @handle for twitter:site
+- `titleTemplate` - Title format (default: `'%s | Site Name'`)
+
+### Sitemap
+
+The sitemap is at `/sitemap.xml` (route: `apps/web/app/routes/sitemap[.]xml.ts`).
+
+To add new static URLs, edit the `staticUrls` array. For dynamic URLs, fetch from database in the loader.

@@ -1,14 +1,17 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
 import { getUsers } from '@monorepo/core/data';
+import { createMeta, createWebSiteSchema } from '~/lib/meta';
+import { JsonLd } from '~/components/JsonLd';
 
 export { RouteErrorBoundary as ErrorBoundary } from '~/components/error';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: 'Expo + React Router 7 Monorepo' },
-    { name: 'description', content: 'Welcome to the monorepo!' },
-  ];
-};
+export const meta: MetaFunction = () =>
+  createMeta({
+    title: 'Welcome',
+    description:
+      'Expo + React Router 7 Monorepo - A modern fullstack TypeScript monorepo',
+    canonical: '/',
+  });
 
 export async function loader() {
   const users = await getUsers();
@@ -31,6 +34,7 @@ export default function Home() {
   const { greeting, users } = useLoaderData<typeof loader>();
   return (
     <div className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <JsonLd schema={createWebSiteSchema()} />
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
           Welcome to the Monorepo!

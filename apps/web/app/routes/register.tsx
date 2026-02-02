@@ -21,13 +21,14 @@ import {
   errorsToMap,
   type FieldErrors,
 } from '@monorepo/core/validation';
+import { createMeta } from '~/lib/meta';
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: 'Register' },
-    { name: 'description', content: 'Create a new account' },
-  ];
-};
+export const meta: MetaFunction = () =>
+  createMeta({
+    title: 'Register',
+    description: 'Create a new account',
+    robots: { index: false },
+  });
 
 export default function Register() {
   const navigate = useNavigate();
